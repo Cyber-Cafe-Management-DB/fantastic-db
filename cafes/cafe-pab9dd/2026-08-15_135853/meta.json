@@ -1,0 +1,67 @@
+{
+    "cafeName":  "cafe-pab9dd",
+    "stamp":  "2026-08-15_135853",
+    "warning":  null,
+    "scannedAt":  "2026-08-15T13:58:55.8722326+03:00",
+    "userName":  "mrtymy",
+    "scriptVersion":  "2.6.0",
+    "logFile":  "C:\\Users\\mrtymy\\AppData\\Local\\Temp\\ccmdm-20260815_135853.log",
+    "tokenLen":  93,
+    "skipDrive":  "C:\\",
+    "cafeSlug":  "cafe-pab9dd",
+    "hostname":  "MASTER",
+    "note":  "FolderManifest + cafe fingerprint for CCMDM. No game payloads.",
+    "schemaVersion":  1,
+    "guessed":  {
+                    "cafeAutomation":  "pncserver",
+                    "diskless":  null,
+                    "gameMenu":  "NextPlay Client.lnk"
+                },
+    "roots":  [
+                  {
+                      "topLevelCount":  3,
+                      "rootId":  "DRIVE_G",
+                      "manifestCount":  1,
+                      "file":  "DRIVE_G.json",
+                      "rootPath":  "G:\\"
+                  }
+              ],
+    "driveDiags":  {
+                       "DRIVE_G":  [
+                                       {
+                                           "exeHere":  false,
+                                           "name":  ".shortcut-targets-by-id",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  true,
+                                           "name":  "Drive\u0027ım",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  ".Encrypted",
+                                           "isDir":  true
+                                       }
+                                   ]
+                   },
+    "osInfo":  {
+                   "ubr":  9168,
+                   "currentBuild":  "26200",
+                   "ntVersionString":  "Microsoft Windows NT 10.0.26200.0",
+                   "revision":  0,
+                   "editionId":  "Professional",
+                   "productName":  "Windows 10 Pro",
+                   "major":  10,
+                   "build":  26200,
+                   "architecture":  "64 bit",
+                   "displayVersion":  "25H2",
+                   "currentMajorVersionNumber":  10,
+                   "caption":  "Microsoft Windows 11 Pro",
+                   "minor":  0,
+                   "friendly":  "Windows 11, version 25H2 (build 26200.9168) [64 bit]"
+               },
+    "maxDepth":  6,
+    "os":  "Windows 11, version 25H2 (build 26200.9168) [64 bit]",
+    "psVersion":  "5.1.26100.9168"
+}

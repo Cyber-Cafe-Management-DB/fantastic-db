@@ -1,0 +1,157 @@
+{
+    "rootPaths":  [
+                      "C:\\Users\\mrtymy\\Desktop",
+                      "C:\\Users\\Public\\Desktop"
+                  ],
+    "scannedAt":  "2026-08-15T13:58:55.8524880+03:00",
+    "items":  [
+                  {
+                      "target":  null,
+                      "name":  "Faturalar",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  true
+                  },
+                  {
+                      "target":  null,
+                      "name":  "MÜŞTERİ EVRAKLARI",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  true
+                  },
+                  {
+                      "target":  null,
+                      "name":  "Yeni klasör",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  true
+                  },
+                  {
+                      "target":  null,
+                      "name":  "BOMBOŞ CV.docx",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  "C:\\Users\\mrtymy\\AppData\\Local\\CapCut\\Apps\\CapCut.exe",
+                      "name":  "CapCut.lnk",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  null,
+                      "name":  "cclisans.txt",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  "C:\\Users\\mrtymy\\AppData\\Local\\Programs\\cursor\\Cursor.exe",
+                      "name":  "Cursor.lnk",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  null,
+                      "name":  "desktop.ini",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  "C:\\Program Files (x86)\\Hard Disk Sentinel\\HDSentinel.exe",
+                      "name":  "Hard Disk Sentinel.lnk",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  null,
+                      "name":  "HESAPLAR.txt",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  "C:\\Program Files\\Google\\Chrome\\Application\\chrome_proxy.exe",
+                      "name":  "Hostinger Mail.lnk",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  "G:\\Drive\u0027ım\\MAIN_FOLDER",
+                      "name":  "MAIN FOLDER.lnk",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  "C:\\Program Files\\Google\\Chrome\\Application\\chrome_proxy.exe",
+                      "name":  "Muhasebe.lnk",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  "C:\\Users\\mrtymy\\AppData\\Local\\NextPlay.Client\\current\\NextPlay.exe",
+                      "name":  "NextPlay Client.lnk",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  null,
+                      "name":  "nots.txt",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  "C:\\PanCafe Pro Server\\pncserver.exe",
+                      "name":  "pncserver - Kısayol.lnk",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  null,
+                      "name":  "Revo Uninstaller Pro 5.4.7.zip",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  "C:\\Program Files\\Google\\Chrome\\Application\\chrome_proxy.exe",
+                      "name":  "Satış.lnk",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  "C:\\Users\\mrtymy\\AppData\\Roaming\\Spotify\\Spotify.exe",
+                      "name":  "Spotify.lnk",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  null,
+                      "name":  "wall.png",
+                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  null,
+                      "name":  "desktop.ini",
+                      "desktopRoot":  "C:\\Users\\Public\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+                      "name":  "Google Chrome.lnk",
+                      "desktopRoot":  "C:\\Users\\Public\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  "C:\\Users\\mrtymy\\AppData\\Local\\NextPlay.Client\\current\\NextPlay.exe",
+                      "name":  "NextPlay Client.lnk",
+                      "desktopRoot":  "C:\\Users\\Public\\Desktop",
+                      "isDir":  false
+                  },
+                  {
+                      "target":  "C:\\Program Files (x86)\\Pan Group\\PUL Server\\pulServer.exe",
+                      "name":  "PanCafe Pro İç İP Log \u0026 URL Monitör.lnk",
+                      "desktopRoot":  "C:\\Users\\Public\\Desktop",
+                      "isDir":  false
+                  }
+              ],
+    "rootId":  "DESKTOP",
+    "schemaVersion":  1,
+    "generator":  "CCMDM-Export.ps1",
+    "generatorVer":  "2.6.0"
+}

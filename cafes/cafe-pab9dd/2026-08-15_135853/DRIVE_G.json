@@ -1,0 +1,109 @@
+{
+    "manifests":  [
+                      {
+                          "manifestHash":  "d07c9fbb0721ceeef689fc8dbf824a86e691d7745603dff99bbcf9f150d25400",
+                          "entries":  [
+                                          "Chrome\u0027dan kaydedildi/",
+                                          "iCafeCloudBackup/",
+                                          "Gemini Gems/",
+                                          "Deniz Net/",
+                                          "MAIN_FOLDER/",
+                                          "Yıllık Bütçe.gsheet",
+                                          "Aylık Bütçe.gsheet",
+                                          "Başlıksız e-tablo (1).gsheet",
+                                          "Youtube repair channels dosyasının kopyası.gsheet",
+                                          "LE.VR.1 Mantık yürütme.doc dosyasının kopyası.doc",
+                                          "3164390.gslides",
+                                          "Servis Fiyat Listemiz.gsheet",
+                                          "excel olarak oluştur o halde.gsheet",
+                                          "WhatsApp Görsel 2024-09-14 saat 21.40.18_41a616b7.jpg",
+                                          "WhatsApp Görsel 2024-09-14 saat 21.40.20_78e82bb5.jpg",
+                                          "WhatsApp Görsel 2024-09-14 saat 21.40.21_7693b49f.jpg",
+                                          "WhatsApp Görsel 2024-09-14 saat 21.40.22_565a992d.jpg",
+                                          "WhatsApp Görsel 2024-09-14 saat 21.42.35_dc6cd950.jpg",
+                                          "Google Keep Dokümanı.gdoc",
+                                          "Gider Tablosu.gsheet",
+                                          "Rapor_0 (1).pdf",
+                                          "Rapor_0.pdf",
+                                          "Student ID Code dosyasının kopyası.gdoc",
+                                          "ideas_www.mycombilgisayar.com.tr_20251013.gsheet",
+                                          "kod.txt adlı dosyanın kopyası",
+                                          "Adsız proje.gscript",
+                                          "goc_anketi.gdoc",
+                                          "sönmez logo 2.pdf",
+                                          "LCFC_KS485_NM_F331 r0.1.rar",
+                                          "LA-916P Rev 1 Bios Ec Testli.rar",
+                                          "FX506HCB-F1.308.bin.zip",
+                                          "CCBoot.vhd",
+                                          "BIOSLAR.rar",
+                                          "JMCN42WW Deniz.bin",
+                                          "Laptop Repair Part 1 OCR-1.pdf adlı dosyanın kopyası.pdf",
+                                          "Laptop Repair Part 2 OCR.pdf adlı dosyanın kopyası.pdf",
+                                          "Optiplex 5000 D12 MTE 212025-1.rar",
+                                          "Kategori,Parça Kodu,Marking Kodu,Ku (2).txt",
+                                          "Kategori,Parça Kodu,Marking Kodu,Ku (1).txt",
+                                          "Kategori,Parça Kodu,Marking Kodu,Ku.txt",
+                                          "Kategori,Parça Kodu,Marking Kodu,Ku (1).gsheet",
+                                          "Kategori,Parça Kodu,Marking Kodu,Ku.gsheet",
+                                          "Başlıksız e-tablo.gsheet",
+                                          "Notebook Parça Listesi.gsheet",
+                                          "20260226_124023.mp4",
+                                          "20260226_123425.mp4",
+                                          "20260226_123100.mp4",
+                                          "Futbol Programı Taslağı Excel Oluşturma.gsheet",
+                                          "T012026000011373.pdf",
+                                          "düğün.mp4 adlı dosyanın kopyası",
+                                          "berkan .mov adlı dosyanın kopyası",
+                                          "me region new.zip",
+                                          "NextAccounts.Agent-win-Setup.exe",
+                                          "159bdbfc-a534-41c4-93f2-d2a3242d7ff9_kopyası.pdf",
+                                          "CCBoot_HLS.rar",
+                                          "Win11_26H1_28000.1836.rar",
+                                          "CCBoot.rar",
+                                          "6 Agustos 2026 merve.pdf",
+                                          "5 Agustos 2026 Merveı.pdf",
+                                          "desktop.ini"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "G:\\Drive\u0027ım",
+                          "schemaVersion":  1,
+                          "exePath":  "G:\\Drive\u0027ım\\NextAccounts.Agent-win-Setup.exe",
+                          "exeMetadata":  [
+                                              {
+                                                  "size":  83652997,
+                                                  "companyName":  "NextAccounts.Agent",
+                                                  "relativePath":  "NextAccounts.Agent-win-Setup.exe",
+                                                  "fileVersion":  "0.1.0",
+                                                  "productName":  "NextAccounts Agent",
+                                                  "name":  "NextAccounts.Agent-win-Setup.exe",
+                                                  "productVersion":  "0.1.0",
+                                                  "originalFilename":  ""
+                                              }
+                                          ]
+                      }
+                  ],
+    "scannedAt":  "2026-08-15T13:58:54.3804737+03:00",
+    "rootPath":  "G:\\",
+    "generatorVer":  "2.6.0",
+    "manifestCount":  1,
+    "rootId":  "DRIVE_G",
+    "generator":  "CCMDM-Export.ps1",
+    "topLevel":  [
+                     {
+                         "exeHere":  false,
+                         "name":  ".shortcut-targets-by-id",
+                         "isDir":  true
+                     },
+                     {
+                         "exeHere":  true,
+                         "name":  "Drive\u0027ım",
+                         "isDir":  true
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  ".Encrypted",
+                         "isDir":  true
+                     }
+                 ],
+    "schemaVersion":  1
+}
