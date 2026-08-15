@@ -1,0 +1,104 @@
+{
+    "manifests":  [
+
+                  ],
+    "scannedAt":  "2026-08-15T13:50:10.7937080+03:00",
+    "rootPath":  "W:\\",
+    "generatorVer":  "2.6.0",
+    "manifestCount":  0,
+    "rootId":  "DRIVE_W",
+    "generator":  "CCMDM-Export.ps1",
+    "topLevel":  [
+                     {
+                         "exeHere":  false,
+                         "name":  "PC10-D.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC10-I.Win 25H2.CCBoot.vhd.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC10-S.vhdx",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC16-D.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC16-I.Win 25H2.CCBoot.vhd.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC16-S.vhdx",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC17-D.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC17-I.Win 25H2.CCBoot.vhd.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC17-S.vhdx",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC19-D.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC19-I.Win 25H2.CCBoot.vhd.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC19-S.vhdx",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC39-D.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC39-I.Win 25H2.CCBoot.vhd.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC39-S.vhdx",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC41-D.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC41-I.Win 25H2.CCBoot.vhd.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC41-S.vhdx",
+                         "isDir":  false
+                     }
+                 ],
+    "schemaVersion":  1
+}

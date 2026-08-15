@@ -1,0 +1,378 @@
+{
+    "cafeName":  "cafe-vgpkxe",
+    "stamp":  "2026-08-15_134949",
+    "warning":  null,
+    "scannedAt":  "2026-08-15T13:50:11.2317383+03:00",
+    "userName":  "Administrator",
+    "scriptVersion":  "2.6.0",
+    "logFile":  "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\ccmdm-20260815_134949.log",
+    "tokenLen":  93,
+    "skipDrive":  "C:\\",
+    "cafeSlug":  "cafe-vgpkxe",
+    "hostname":  "UCGEN",
+    "note":  "FolderManifest + cafe fingerprint for CCMDM. No game payloads.",
+    "schemaVersion":  1,
+    "guessed":  {
+                    "cafeAutomation":  "PanCafePro_3.3.2.zip",
+                    "diskless":  "CCBoot",
+                    "gameMenu":  "NextPlay"
+                },
+    "roots":  [
+                  {
+                      "topLevelCount":  6,
+                      "rootId":  "DRIVE_D",
+                      "manifestCount":  28,
+                      "file":  "DRIVE_D.json",
+                      "rootPath":  "D:\\"
+                  },
+                  {
+                      "topLevelCount":  0,
+                      "rootId":  "DRIVE_O",
+                      "manifestCount":  0,
+                      "file":  "DRIVE_O.json",
+                      "rootPath":  "O:\\"
+                  },
+                  {
+                      "topLevelCount":  11,
+                      "rootId":  "DRIVE_S",
+                      "manifestCount":  1236,
+                      "file":  "DRIVE_S.json",
+                      "rootPath":  "S:\\"
+                  },
+                  {
+                      "topLevelCount":  3,
+                      "rootId":  "DRIVE_U",
+                      "manifestCount":  5,
+                      "file":  "DRIVE_U.json",
+                      "rootPath":  "U:\\"
+                  },
+                  {
+                      "topLevelCount":  18,
+                      "rootId":  "DRIVE_V",
+                      "manifestCount":  0,
+                      "file":  "DRIVE_V.json",
+                      "rootPath":  "V:\\"
+                  },
+                  {
+                      "topLevelCount":  18,
+                      "rootId":  "DRIVE_W",
+                      "manifestCount":  0,
+                      "file":  "DRIVE_W.json",
+                      "rootPath":  "W:\\"
+                  }
+              ],
+    "driveDiags":  {
+                       "DRIVE_O":  [
+
+                                   ],
+                       "DRIVE_V":  [
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC07-D.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC07-I.Win 25H2.CCBoot.vhd.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC07-S.vhdx",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC08-D.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC08-I.Win 25H2.CCBoot.vhd.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC08-S.vhdx",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC18-D.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC18-I.Win 25H2.CCBoot.vhd.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC18-S.vhdx",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC40-D.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC40-I.Win 25H2.CCBoot.vhd.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC40-S.vhdx",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC42-D.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC42-I.Win 25H2.CCBoot.vhd.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC42-S.vhdx",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC45-D.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC45-I.Win 25H2.CCBoot.vhd.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC45-S.vhdx",
+                                           "isDir":  false
+                                       }
+                                   ],
+                       "DRIVE_W":  [
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC10-D.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC10-I.Win 25H2.CCBoot.vhd.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC10-S.vhdx",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC16-D.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC16-I.Win 25H2.CCBoot.vhd.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC16-S.vhdx",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC17-D.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC17-I.Win 25H2.CCBoot.vhd.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC17-S.vhdx",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC19-D.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC19-I.Win 25H2.CCBoot.vhd.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC19-S.vhdx",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC39-D.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC39-I.Win 25H2.CCBoot.vhd.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC39-S.vhdx",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC41-D.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC41-I.Win 25H2.CCBoot.vhd.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC41-S.vhdx",
+                                           "isDir":  false
+                                       }
+                                   ],
+                       "DRIVE_D":  [
+                                       {
+                                           "exeHere":  true,
+                                           "name":  "Client",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  true,
+                                           "name":  "NextPlay-UI",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "OFFLINE",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "ONLINE",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "Export-FolderManifests.ps1",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "folder-manifests.json",
+                                           "isDir":  false
+                                       }
+                                   ],
+                       "DRIVE_U":  [
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "ucgen-srv",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "steam.txt",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "ucgen-srv.rar",
+                                           "isDir":  false
+                                       }
+                                   ],
+                       "DRIVE_S":  [
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "OFFLINE",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "ONLINE",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "src",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "src2",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "src3",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "src4",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "SteamLib",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "ucgenindirmedizini",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "Export-FolderManifests.ps1",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "folder-manifests.json",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "online-manifests-yeni.json",
+                                           "isDir":  false
+                                       }
+                                   ]
+                   },
+    "osInfo":  {
+                   "ubr":  33158,
+                   "currentBuild":  "26100",
+                   "ntVersionString":  "Microsoft Windows NT 10.0.26100.0",
+                   "revision":  0,
+                   "editionId":  "ServerStandard",
+                   "productName":  "Windows Server 2025 Standard",
+                   "major":  10,
+                   "build":  26100,
+                   "architecture":  "64 bit",
+                   "displayVersion":  "24H2",
+                   "currentMajorVersionNumber":  10,
+                   "caption":  "Microsoft Windows Server 2025 Standard",
+                   "minor":  0,
+                   "friendly":  "Windows 11, version 24H2 (build 26100.33158) [64 bit]"
+               },
+    "maxDepth":  6,
+    "os":  "Windows 11, version 24H2 (build 26100.33158) [64 bit]",
+    "psVersion":  "5.1.26100.33158"
+}
