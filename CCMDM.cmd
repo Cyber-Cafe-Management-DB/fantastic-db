@@ -1,17 +1,28 @@
 @echo off
 REM CCMDM.cmd v4 — tek tik launcher
-REM Is bitince Go.ps1: temp kalintilar + bu .cmd dosyasini siler.
-REM Masaustu\CCMDM-SONUC.txt kalir.
+REM Indirme (zip yok, tarayici kaydeder):
+REM   https://github.com/Cyber-Cafe-Management-DB/fantastic-db/releases/download/v1/CCMDM.cmd
+REM Bu dosya (repo/raw) token ICERMEZ — Release asset kullan.
+REM Is bitince Go.ps1: temp + bu .cmd silinir. Masaustu\CCMDM-SONUC.txt kalir.
 
 set "CCMDM_GH_OWNER=Cyber-Cafe-Management-DB"
 set "CCMDM_GH_REPO=fantastic-db"
 set "CCMDM_GH_BRANCH=main"
-set "CCMDM_GH_TOKEN=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"
+set "CCMDM_GH_TOKEN=REPLACE_ME"
 
 set "CCMDM_STATUS=%TEMP%\ccmdm-last-run.log"
 set "CCMDM_GO=%TEMP%\ccmdm-go.ps1"
 set "CCMDM_GO_URL=https://raw.githubusercontent.com/%CCMDM_GH_OWNER%/%CCMDM_GH_REPO%/%CCMDM_GH_BRANCH%/CCMDM-Go.ps1"
 set "CCMDM_LAUNCHER=%~f0"
+
+if "%CCMDM_GH_TOKEN%"=="REPLACE_ME" (
+  echo.
+  echo CCMDM: Bu kopyada token yok.
+  echo Indir: https://github.com/Cyber-Cafe-Management-DB/fantastic-db/releases/download/v1/CCMDM.cmd
+  echo.
+  pause
+  exit /b 1
+)
 
 echo [%DATE% %TIME%] CCMDM.cmd start> "%CCMDM_STATUS%"
 
