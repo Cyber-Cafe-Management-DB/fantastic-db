@@ -1,5 +1,5 @@
-# CCMDM elevate+download helper (public). Secrets via -Token param (RunAs env miras almaz).
-# PowerShell 5.1.
+# CCMDM-Go.ps1 — indir + Export'u AYNI oturumda calistir (Start-Process env kaybettiriyordu)
+# Secrets: -Token / -Owner / -Repo / -Branch parametreleri
 
 [CmdletBinding()]
 param(
@@ -15,26 +15,16 @@ function Log([string]$m) {
     Add-Content -LiteralPath $status -Value ("[{0}] {1}" -f (Get-Date -Format "o"), $m) -Encoding UTF8
 }
 
-Log "CCMDM-Go.ps1 start"
-if ($Owner) { $env:CCMDM_GH_OWNER = $Owner }
-if ($Repo) { $env:CCMDM_GH_REPO = $Repo }
-if ($Branch) { $env:CCMDM_GH_BRANCH = $Branch }
-if ($Token) { $env:CCMDM_GH_TOKEN = $Token }
+Log "CCMDM-Go.ps1 v3 start"
+if (-not $Branch) { $Branch = "main" }
+Log ("owner={0} repo={1} branch={2} tokenLen={3}" -f $Owner, $Repo, $Branch, ($(if ($Token) { $Token.Length } else { 0 })))
 
-$owner = $env:CCMDM_GH_OWNER
-$repo = $env:CCMDM_GH_REPO
-$branch = $env:CCMDM_GH_BRANCH
-$token = $env:CCMDM_GH_TOKEN
-if (-not $branch) { $branch = "main" }
-
-Log ("owner={0} repo={1} branch={2} tokenLen={3}" -f $owner, $repo, $branch, ($(if ($token) { $token.Length } else { 0 })))
-
-if (-not $owner -or -not $repo -or -not $token -or $token -match "REPLACE") {
+if (-not $Owner -or -not $Repo -or -not $Token -or $Token -match "REPLACE") {
     Log "ERROR missing Owner/Repo/Token"
     exit 2
 }
 
-$url = "https://raw.githubusercontent.com/$owner/$repo/$branch/CCMDM-Export.ps1"
+$url = "https://raw.githubusercontent.com/$Owner/$Repo/$Branch/CCMDM-Export.ps1"
 $ps1 = Join-Path $env:TEMP ("ccmdm-export-{0}.ps1" -f [guid]::NewGuid().ToString("N"))
 
 try {
@@ -42,14 +32,14 @@ try {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     Invoke-WebRequest -Uri $url -OutFile $ps1 -UseBasicParsing
     Unblock-File -LiteralPath $ps1 -ErrorAction SilentlyContinue
-    Log ("run export size={0}" -f (Get-Item $ps1).Length)
-    $p = Start-Process -FilePath "powershell.exe" -PassThru -Wait -WindowStyle Hidden -ArgumentList @(
-        "-NoProfile", "-ExecutionPolicy", "Bypass", "-WindowStyle", "Hidden",
-        "-File", $ps1, "-Silent"
-    )
-    # Child also needs env — Start-Process inherits from THIS elevated process, OK
-    Log ("export exit={0}" -f $p.ExitCode)
-    exit $p.ExitCode
+    Log ("run export in-process size={0}" -f (Get-Item -LiteralPath $ps1).Length)
+
+    # Ayni process: token parametresi kesin gider, log kesilmez
+    & $ps1 -Silent -Owner $Owner -Repo $Repo -Branch $Branch -Token $Token
+    $code = $LASTEXITCODE
+    if ($null -eq $code) { $code = 0 }
+    Log ("export exit={0}" -f $code)
+    exit $code
 } catch {
     Log ("ERROR {0}" -f $_.Exception.Message)
     $_ | Out-File -FilePath (Join-Path $env:TEMP "ccmdm-launcher-error.log") -Encoding utf8

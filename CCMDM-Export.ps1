@@ -1,17 +1,26 @@
 # CCMDM (Cyber-Cafe-Management-DB) FolderManifest exporter + GitHub uploader
-# v2.1 — C: harici disk yoksa bile status push eder (teshis icin).
+# v2.2 — token parametresi, teshis (topLevel), 0 oyun olsa bile push + SONUC.txt
 # PowerShell 5.1. ASCII Turkce log. Git gerekmez.
 
 [CmdletBinding()]
 param(
     [switch]$LocalOnly,
     [switch]$Silent,
-    [int]$MaxDepth = 5
+    [int]$MaxDepth = 6,
+    [string]$Owner = "",
+    [string]$Repo = "",
+    [string]$Branch = "",
+    [string]$Token = ""
 )
 
 $ErrorActionPreference = "Stop"
-$ScriptVersion = "2.1.0"
+$ScriptVersion = "2.2.0"
 if (-not $PSBoundParameters.ContainsKey("Silent")) { $Silent = $true }
+
+if ($Owner) { $env:CCMDM_GH_OWNER = $Owner }
+if ($Repo) { $env:CCMDM_GH_REPO = $Repo }
+if ($Branch) { $env:CCMDM_GH_BRANCH = $Branch }
+if ($Token) { $env:CCMDM_GH_TOKEN = $Token }
 
 $LogFile = Join-Path $env:TEMP ("ccmdm-{0}.log" -f (Get-Date -Format "yyyyMMdd_HHmmss"))
 $StatusFile = Join-Path $env:TEMP "ccmdm-last-run.log"
@@ -23,6 +32,19 @@ function Write-CcmdmLog {
     try { Add-Content -LiteralPath $LogFile -Value $line -Encoding UTF8 -ErrorAction SilentlyContinue } catch { }
     try { Add-Content -LiteralPath $StatusFile -Value $line -Encoding UTF8 -ErrorAction SilentlyContinue } catch { }
     if (-not $Silent) { Write-Host $line }
+}
+
+function Write-Sonuc([string]$text) {
+    try {
+        $desk = [Environment]::GetFolderPath("Desktop")
+        if (-not $desk) { $desk = $env:USERPROFILE }
+        if ($desk) {
+            Set-Content -LiteralPath (Join-Path $desk "CCMDM-SONUC.txt") -Value $text -Encoding UTF8
+        }
+        Set-Content -LiteralPath (Join-Path $env:TEMP "CCMDM-SONUC.txt") -Value $text -Encoding UTF8
+    } catch {
+        Write-CcmdmLog ("SONUC yazilamadi: {0}" -f $_.Exception.Message) "WARN"
+    }
 }
 
 function Get-RandomCafeSlug {
@@ -166,10 +188,30 @@ function Get-NonCDriveRoots {
         Where-Object { $_.Root -match '^[A-Za-z]:\\$' -and $_.Root -ne 'C:\' } |
         ForEach-Object {
             if (Test-Path -LiteralPath $_.Root) {
-                $list.Add([pscustomobject]@{ id = ("DRIVE_{0}" -f $_.Root.Substring(0, 1).ToUpperInvariant()); path = $_.Root })
+                $list.Add([pscustomobject]@{
+                    id   = ("DRIVE_{0}" -f $_.Root.Substring(0, 1).ToUpperInvariant())
+                    path = $_.Root
+                })
             }
         }
     return $list
+}
+
+function Get-TopLevelDiag {
+    param([string]$Root)
+    $items = @()
+    try {
+        Get-ChildItem -LiteralPath $Root -Force -ErrorAction Stop | Select-Object -First 100 | ForEach-Object {
+            $exeHere = $false
+            if ($_.PSIsContainer) {
+                $exeHere = [bool](Get-ChildItem -LiteralPath $_.FullName -Filter *.exe -File -ErrorAction SilentlyContinue | Select-Object -First 1)
+            }
+            $items += [ordered]@{ name = $_.Name; isDir = [bool]$_.PSIsContainer; exeHere = $exeHere }
+        }
+    } catch {
+        $items += [ordered]@{ name = ("ERROR: {0}" -f $_.Exception.Message); isDir = $false; exeHere = $false }
+    }
+    return $items
 }
 
 function ConvertTo-CcmdmJson { param($Object) return ($Object | ConvertTo-Json -Depth 12 -Compress:$false) }
@@ -228,9 +270,10 @@ function Get-GitHubConfig {
 }
 
 # --- main ---
-try { Set-Content -LiteralPath $StatusFile -Value "CCMDM-Export start" -Encoding UTF8 } catch { }
+try { Add-Content -LiteralPath $StatusFile -Value "CCMDM-Export start" -Encoding UTF8 } catch { }
 Write-CcmdmLog ("CCMDM-Export v{0} Silent={1}" -f $ScriptVersion, $Silent)
 Write-CcmdmLog ("log={0}" -f $LogFile)
+Write-CcmdmLog ("tokenLen={0} owner={1}" -f ($(if ($env:CCMDM_GH_TOKEN) { $env:CCMDM_GH_TOKEN.Length } else { 0 })), $env:CCMDM_GH_OWNER)
 
 $cafeSlug = Get-RandomCafeSlug
 $stamp = Get-Date -Format "yyyy-MM-dd_HHmmss"
@@ -248,25 +291,41 @@ $outDir = Join-Path $env:TEMP ("ccmdm-out\{0}\{1}" -f $cafeSlug, $stamp)
 New-Item -ItemType Directory -Force -Path $outDir | Out-Null
 $allSummaries = @()
 $filesForGh = @{}
+$driveDiags = @{}
 
 foreach ($r in $roots) {
     Write-CcmdmLog ("taraniyor: {0}" -f $r.path)
+    $diag = @(Get-TopLevelDiag -Root $r.path)
+    $driveDiags[$r.id] = $diag
+    Write-CcmdmLog ("  ust seviye kayit: {0}" -f $diag.Count)
+    foreach ($d in ($diag | Select-Object -First 30)) {
+        Write-CcmdmLog ("    - {0} dir={1} exeHere={2}" -f $d.name, $d.isDir, $d.exeHere)
+    }
+
     $manifests = New-Object System.Collections.Generic.List[object]
     try { Walk-GameRoots -Dir $r.path -Depth 0 -MaxDepth $MaxDepth -Out $manifests }
     catch { Write-CcmdmLog ("tarama hatasi {0}: {1}" -f $r.path, $_.Exception.Message) "WARN" }
     Write-CcmdmLog ("  -> {0} FolderManifest" -f $manifests.Count)
+
+    Write-CcmdmLog "  json yaziliyor..."
     $payload = [ordered]@{
         schemaVersion = 1; generator = "CCMDM-Export.ps1"; generatorVer = $ScriptVersion
         rootId = $r.id; rootPath = $r.path; scannedAt = (Get-Date).ToString("o")
+        topLevel = $diag
         manifestCount = $manifests.Count; manifests = @($manifests)
     }
     $json = ConvertTo-CcmdmJson -Object $payload
     $fileName = ("{0}.json" -f ($r.id -replace '[^\w\-]+', '_'))
     [System.IO.File]::WriteAllText((Join-Path $outDir $fileName), $json, [System.Text.UTF8Encoding]::new($false))
     $filesForGh[("cafes/{0}/{1}/{2}" -f $cafeSlug, $stamp, $fileName)] = $json
-    $allSummaries += [ordered]@{ rootId = $r.id; rootPath = $r.path; manifestCount = $manifests.Count; file = $fileName }
+    $allSummaries += [ordered]@{
+        rootId = $r.id; rootPath = $r.path; manifestCount = $manifests.Count
+        file = $fileName; topLevelCount = $diag.Count
+    }
+    Write-CcmdmLog ("  json ok ({0} ch)" -f $json.Length)
 }
 
+Write-CcmdmLog "meta yaziliyor..."
 $meta = [ordered]@{
     schemaVersion = 1; scriptVersion = $ScriptVersion
     cafeName = $cafeSlug; cafeSlug = $cafeSlug; stamp = $stamp
@@ -274,37 +333,40 @@ $meta = [ordered]@{
     os = [string][Environment]::OSVersion.VersionString
     psVersion = $PSVersionTable.PSVersion.ToString()
     scannedAt = (Get-Date).ToString("o"); skipDrive = "C:\"; maxDepth = $MaxDepth
-    roots = $allSummaries; logFile = $LogFile; warning = $warn
+    roots = $allSummaries; driveDiags = $driveDiags
+    logFile = $LogFile; warning = $warn
+    tokenLen = $(if ($env:CCMDM_GH_TOKEN) { $env:CCMDM_GH_TOKEN.Length } else { 0 })
     note = "FolderManifest corpus for Cyber-Cafe-Management-DB (CCMDM). No game payloads."
 }
 $metaJson = ConvertTo-CcmdmJson -Object $meta
 [System.IO.File]::WriteAllText((Join-Path $outDir "meta.json"), $metaJson, [System.Text.UTF8Encoding]::new($false))
 $filesForGh[("cafes/{0}/{1}/meta.json" -f $cafeSlug, $stamp)] = $metaJson
-Write-CcmdmLog ("yerel cikti: {0}" -f $outDir)
+Write-CcmdmLog ("yerel cikti: {0} filesForGh={1}" -f $outDir, $filesForGh.Count)
 
 $gh = Get-GitHubConfig
 if ($LocalOnly) {
     Write-CcmdmLog "LocalOnly: push yok."
+    Write-Sonuc "CCMDM LocalOnly. slug=$cafeSlug out=$outDir"
 } elseif ($null -eq $gh) {
     Write-CcmdmLog "CCMDM_GH_* eksik; push yok." "ERROR"
+    Write-Sonuc "CCMDM HATA: token/owner eksik. log=$LogFile"
     exit 2
 } else {
+    Write-CcmdmLog ("GitHub push basliyor owner={0} repo={1}" -f $gh.owner, $gh.repo)
     try {
         $url = Publish-ToGitHub -Gh $gh -CafeSlug $cafeSlug -Stamp $stamp -Files $filesForGh
         Write-CcmdmLog ("GitHub OK: {0}" -f $url) "OK"
-        try {
-            $desk = [Environment]::GetFolderPath("Desktop")
-            if ($desk) {
-                Set-Content -LiteralPath (Join-Path $desk "CCMDM-SONUC.txt") -Value @"
+        $sum = ($allSummaries | Measure-Object -Property manifestCount -Sum).Sum
+        Write-Sonuc @"
 CCMDM tamam.
 slug: $cafeSlug
+manifestToplam: $sum
 url: $url
 log: $LogFile
-"@ -Encoding UTF8
-            }
-        } catch { }
+"@
     } catch {
         Write-CcmdmLog ("GitHub push basarisiz: {0}" -f $_.Exception.Message) "ERROR"
+        Write-Sonuc "CCMDM HATA push: $($_.Exception.Message)`nlog=$LogFile"
         exit 3
     }
 }
