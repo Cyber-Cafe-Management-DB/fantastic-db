@@ -1,5 +1,5 @@
 # CCMDM (Cyber-Cafe-Management-DB) FolderManifest exporter + GitHub uploader
-# v2.2 — token parametresi, teshis (topLevel), 0 oyun olsa bile push + SONUC.txt
+# v2.3 — JSON yazimi guvenli; exe yoksa bile ust klasor snapshot; push kesin denenir
 # PowerShell 5.1. ASCII Turkce log. Git gerekmez.
 
 [CmdletBinding()]
@@ -14,7 +14,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$ScriptVersion = "2.2.0"
+$ScriptVersion = "2.3.0"
 if (-not $PSBoundParameters.ContainsKey("Silent")) { $Silent = $true }
 
 if ($Owner) { $env:CCMDM_GH_OWNER = $Owner }
@@ -38,9 +38,7 @@ function Write-Sonuc([string]$text) {
     try {
         $desk = [Environment]::GetFolderPath("Desktop")
         if (-not $desk) { $desk = $env:USERPROFILE }
-        if ($desk) {
-            Set-Content -LiteralPath (Join-Path $desk "CCMDM-SONUC.txt") -Value $text -Encoding UTF8
-        }
+        if ($desk) { Set-Content -LiteralPath (Join-Path $desk "CCMDM-SONUC.txt") -Value $text -Encoding UTF8 }
         Set-Content -LiteralPath (Join-Path $env:TEMP "CCMDM-SONUC.txt") -Value $text -Encoding UTF8
     } catch {
         Write-CcmdmLog ("SONUC yazilamadi: {0}" -f $_.Exception.Message) "WARN"
@@ -55,18 +53,32 @@ function Get-RandomCafeSlug {
     return $sb.ToString()
 }
 
+function ConvertTo-CcmdmJson {
+    param($Object)
+    # PS 5.1: Generic.List / ordered bazen takiliyor; once düz diziye cevir
+    try {
+        return (ConvertTo-Json -InputObject $Object -Depth 10 -Compress:$false)
+    } catch {
+        Write-CcmdmLog ("ConvertTo-Json hata: {0}" -f $_.Exception.Message) "ERROR"
+        throw
+    }
+}
+
 function Get-PeInfo {
     param([string]$ExeFullPath, [string]$FolderRoot)
     try {
         $item = Get-Item -LiteralPath $ExeFullPath -ErrorAction Stop
         $v = [System.Diagnostics.FileVersionInfo]::GetVersionInfo($ExeFullPath)
         $rel = $ExeFullPath.Substring($FolderRoot.Length).TrimStart('\', '/')
-        return [ordered]@{
-            name = $item.Name; relativePath = ($rel -replace '\\', '/')
+        return @{
+            name = [string]$item.Name
+            relativePath = [string]($rel -replace '\\', '/')
             size = [int64]$item.Length
-            fileVersion = $v.FileVersion; productVersion = $v.ProductVersion
-            productName = $v.ProductName; originalFilename = $v.OriginalFilename
-            companyName = $v.CompanyName
+            fileVersion = [string]$v.FileVersion
+            productVersion = [string]$v.ProductVersion
+            productName = [string]$v.ProductName
+            originalFilename = [string]$v.OriginalFilename
+            companyName = [string]$v.CompanyName
         }
     } catch { return $null }
 }
@@ -102,119 +114,132 @@ function Test-HasNestedExe {
 
 function Get-NestedExeFiles {
     param([string]$Folder)
-    $list = New-Object System.Collections.Generic.List[object]
+    $list = @()
     $peep = @('bin', 'Binaries', 'Win64', 'Win32', 'x64', 'x86', 'Game', 'Bin', 'engine', 'Engine', 'Bin32', 'Bin64')
     foreach ($p in $peep) {
         $d = Join-Path $Folder $p
         if (-not (Test-Path -LiteralPath $d)) { continue }
-        Get-ChildItem -LiteralPath $d -Filter *.exe -File -Recurse -Depth 2 -ErrorAction SilentlyContinue | ForEach-Object { $list.Add($_) }
+        $list += @(Get-ChildItem -LiteralPath $d -Filter *.exe -File -Recurse -Depth 2 -ErrorAction SilentlyContinue)
     }
-    return $list
+    return @($list | Sort-Object -Property FullName -Unique)
 }
 
 function New-FolderManifest {
     param([string]$Folder)
-    $entries = New-Object System.Collections.Generic.List[string]
-    $exeMeta = New-Object System.Collections.Generic.List[object]
+    $entryList = New-Object System.Collections.ArrayList
     Get-ChildItem -LiteralPath $Folder -Force -ErrorAction SilentlyContinue | ForEach-Object {
-        if ($_.PSIsContainer) { $entries.Add($_.Name + "/") } else { $entries.Add($_.Name) }
+        if ($_.PSIsContainer) { [void]$entryList.Add($_.Name + "/") } else { [void]$entryList.Add($_.Name) }
     }
-    $exeFiles = New-Object System.Collections.Generic.List[object]
-    Get-ChildItem -LiteralPath $Folder -Filter *.exe -File -ErrorAction SilentlyContinue | ForEach-Object { $exeFiles.Add($_) }
-    foreach ($n in (Get-NestedExeFiles -Folder $Folder)) { $exeFiles.Add($n) }
+
+    $exeMetaList = New-Object System.Collections.ArrayList
+    $exeFiles = @()
+    $exeFiles += @(Get-ChildItem -LiteralPath $Folder -Filter *.exe -File -ErrorAction SilentlyContinue)
+    $exeFiles += @(Get-NestedExeFiles -Folder $Folder)
     $seen = @{}
     foreach ($e in $exeFiles) {
+        if (-not $e) { continue }
         $key = $e.FullName.ToLowerInvariant()
         if ($seen.ContainsKey($key)) { continue }
         $seen[$key] = $true
         $pe = Get-PeInfo -ExeFullPath $e.FullName -FolderRoot $Folder
         if ($null -ne $pe) {
-            $exeMeta.Add($pe)
-            if ($pe.relativePath -and $pe.relativePath.Contains("/") -and ($entries -notcontains $pe.relativePath)) {
-                $entries.Add($pe.relativePath)
+            [void]$exeMetaList.Add($pe)
+            $rel = $pe.relativePath
+            if ($rel -and $rel.Contains("/") -and -not $entryList.Contains($rel)) {
+                [void]$entryList.Add($rel)
             }
         }
     }
+
     $exePath = $null
-    if ($exeMeta.Count -gt 0) {
-        $preferred = $exeMeta | Sort-Object { -[int64]$_.size } | Select-Object -First 1
+    if ($exeMetaList.Count -gt 0) {
+        $preferred = $exeMetaList | Sort-Object { -[int64]$_.size } | Select-Object -First 1
         $exePath = Join-Path $Folder (($preferred.relativePath -replace '/', '\'))
     }
-    $normEntries = @($entries | ForEach-Object { $_.ToLowerInvariant() } | Sort-Object -Unique)
+
+    $entriesArr = @($entryList.ToArray())
+    $norm = @($entriesArr | ForEach-Object { $_.ToLowerInvariant() } | Sort-Object -Unique)
     $sha = [System.Security.Cryptography.SHA256]::Create()
     try {
-        $bytes = [Text.Encoding]::UTF8.GetBytes(($normEntries -join "`n"))
+        $bytes = [Text.Encoding]::UTF8.GetBytes(($norm -join "`n"))
         $hash = ($sha.ComputeHash($bytes) | ForEach-Object { $_.ToString("x2") }) -join ""
     } finally { $sha.Dispose() }
-    return [ordered]@{
-        schemaVersion = 1; folderPath = $Folder; entries = @($entries)
-        exeMetadata = @($exeMeta); steamAppId = (Get-SteamAppId -Folder $Folder)
-        exePath = $exePath; manifestHash = $hash
+
+    return @{
+        schemaVersion = 1
+        folderPath    = [string]$Folder
+        entries       = $entriesArr
+        exeMetadata   = @($exeMetaList.ToArray())
+        steamAppId    = (Get-SteamAppId -Folder $Folder)
+        exePath       = $exePath
+        manifestHash  = $hash
     }
 }
 
 function Test-ShouldSkipDir {
     param([string]$Name)
+    if ($Name -match '(?i)^\$') { return $true }
     $skipExact = @(
         'TOOLS', 'Tools', 'Temp', 'tmp', '__Installer', '_CommonRedist', '_checkpoints',
         'Steam Controller Configs', 'Steamworks Shared', 'node_modules', '.git',
-        '$Recycle.Bin', 'System Volume Information', 'Recovery', 'PerfLogs',
+        'System Volume Information', 'Recovery', 'PerfLogs',
         'Windows', 'Program Files', 'Program Files (x86)', 'ProgramData', 'Users', 'Documents and Settings'
     )
     foreach ($s in $skipExact) { if ($Name -eq $s) { return $true } }
-    if ($Name -match '(?i)^\$|redist|directx|vcredist|dotnet|openal|physx|xna') { return $true }
+    if ($Name -match '(?i)redist|directx|vcredist|dotnet|openal|physx|xna') { return $true }
     return $false
 }
 
 function Walk-GameRoots {
-    param([string]$Dir, [int]$Depth, [int]$MaxDepth, [System.Collections.Generic.List[object]]$Out)
+    param([string]$Dir, [int]$Depth, [int]$MaxDepth, [System.Collections.ArrayList]$Out)
     $rootExes = @(Get-ChildItem -LiteralPath $Dir -Filter *.exe -File -ErrorAction SilentlyContinue)
     $hasNested = Test-HasNestedExe -Dir $Dir
     $isDriveRoot = ($Dir -match '^[A-Za-z]:\\?$')
+
     if (-not $isDriveRoot -and ($rootExes.Count -gt 0 -or $hasNested)) {
-        $Out.Add((New-FolderManifest -Folder $Dir)); return
+        [void]$Out.Add((New-FolderManifest -Folder $Dir))
+        return
     }
     if ($Depth -ge $MaxDepth) { return }
+
     Get-ChildItem -LiteralPath $Dir -Directory -Force -ErrorAction SilentlyContinue | ForEach-Object {
         if (Test-ShouldSkipDir -Name $_.Name) { return }
-        if ($_.Name -match '^(?i)bin|binaries|win64|win32|x64|x86|game|engine|bin32|bin64$') { return }
+        if ($_.Name -match '^(?i)bin|binaries|win64|win32|x64|x86|engine|bin32|bin64$') { return }
         Walk-GameRoots -Dir $_.FullName -Depth ($Depth + 1) -MaxDepth $MaxDepth -Out $Out
     }
 }
 
 function Get-NonCDriveRoots {
-    $list = New-Object System.Collections.Generic.List[object]
+    $list = New-Object System.Collections.ArrayList
     Get-PSDrive -PSProvider FileSystem -ErrorAction SilentlyContinue |
         Where-Object { $_.Root -match '^[A-Za-z]:\\$' -and $_.Root -ne 'C:\' } |
         ForEach-Object {
             if (Test-Path -LiteralPath $_.Root) {
-                $list.Add([pscustomobject]@{
+                [void]$list.Add(@{
                     id   = ("DRIVE_{0}" -f $_.Root.Substring(0, 1).ToUpperInvariant())
                     path = $_.Root
                 })
             }
         }
-    return $list
+    return ,$list.ToArray()
 }
 
 function Get-TopLevelDiag {
     param([string]$Root)
-    $items = @()
+    $items = New-Object System.Collections.ArrayList
     try {
         Get-ChildItem -LiteralPath $Root -Force -ErrorAction Stop | Select-Object -First 100 | ForEach-Object {
             $exeHere = $false
             if ($_.PSIsContainer) {
                 $exeHere = [bool](Get-ChildItem -LiteralPath $_.FullName -Filter *.exe -File -ErrorAction SilentlyContinue | Select-Object -First 1)
             }
-            $items += [ordered]@{ name = $_.Name; isDir = [bool]$_.PSIsContainer; exeHere = $exeHere }
+            [void]$items.Add(@{ name = [string]$_.Name; isDir = [bool]$_.PSIsContainer; exeHere = $exeHere })
         }
     } catch {
-        $items += [ordered]@{ name = ("ERROR: {0}" -f $_.Exception.Message); isDir = $false; exeHere = $false }
+        [void]$items.Add(@{ name = ("ERROR: {0}" -f $_.Exception.Message); isDir = $false; exeHere = $false })
     }
-    return $items
+    return ,$items.ToArray()
 }
-
-function ConvertTo-CcmdmJson { param($Object) return ($Object | ConvertTo-Json -Depth 12 -Compress:$false) }
 
 function Invoke-GitHubApi {
     param([string]$Method, [string]$Url, [string]$Token, [object]$Body = $null)
@@ -226,7 +251,7 @@ function Invoke-GitHubApi {
     }
     $params = @{ Method = $Method; Uri = $Url; Headers = $headers }
     if ($null -ne $Body) {
-        $json = if ($Body -is [string]) { $Body } else { $Body | ConvertTo-Json -Depth 20 -Compress }
+        $json = if ($Body -is [string]) { $Body } else { ConvertTo-Json -InputObject $Body -Depth 20 -Compress }
         $params.ContentType = "application/json; charset=utf-8"
         $params.Body = $json
     }
@@ -266,7 +291,7 @@ function Get-GitHubConfig {
     if (-not $branch) { $branch = "main" }
     if (-not $repo) { $repo = "fantastic-db" }
     if ([string]::IsNullOrWhiteSpace($owner) -or [string]::IsNullOrWhiteSpace($token) -or $token -match 'REPLACE') { return $null }
-    return [pscustomobject]@{ owner = $owner; repo = $repo; branch = $branch; token = $token }
+    return @{ owner = $owner; repo = $repo; branch = $branch; token = $token }
 }
 
 # --- main ---
@@ -280,7 +305,7 @@ $stamp = Get-Date -Format "yyyy-MM-dd_HHmmss"
 $roots = @(Get-NonCDriveRoots)
 $warn = $null
 if ($roots.Count -eq 0) {
-    $warn = "C: haricinde erisilebilir disk yok. Bos status push edilecek."
+    $warn = "C: haricinde disk yok."
     Write-CcmdmLog $warn "WARN"
 }
 
@@ -289,6 +314,8 @@ foreach ($r in $roots) { Write-CcmdmLog ("  kok: {0} => {1}" -f $r.id, $r.path) 
 
 $outDir = Join-Path $env:TEMP ("ccmdm-out\{0}\{1}" -f $cafeSlug, $stamp)
 New-Item -ItemType Directory -Force -Path $outDir | Out-Null
+Set-Content -LiteralPath (Join-Path $outDir "_progress.txt") -Value "started" -Encoding UTF8
+
 $allSummaries = @()
 $filesForGh = @{}
 $driveDiags = @{}
@@ -302,45 +329,81 @@ foreach ($r in $roots) {
         Write-CcmdmLog ("    - {0} dir={1} exeHere={2}" -f $d.name, $d.isDir, $d.exeHere)
     }
 
-    $manifests = New-Object System.Collections.Generic.List[object]
+    $manifests = New-Object System.Collections.ArrayList
     try { Walk-GameRoots -Dir $r.path -Depth 0 -MaxDepth $MaxDepth -Out $manifests }
     catch { Write-CcmdmLog ("tarama hatasi {0}: {1}" -f $r.path, $_.Exception.Message) "WARN" }
-    Write-CcmdmLog ("  -> {0} FolderManifest" -f $manifests.Count)
 
+    # Hic oyun yoksa: ust seviye normal klasorleri yine snapshot'la (testgame vb.)
+    if ($manifests.Count -eq 0) {
+        Write-CcmdmLog "  0 manifest; ust klasor snapshot deneniyor..."
+        foreach ($d in $diag) {
+            if (-not $d.isDir) { continue }
+            if (Test-ShouldSkipDir -Name $d.name) { continue }
+            $folder = Join-Path $r.path $d.name
+            try {
+                [void]$manifests.Add((New-FolderManifest -Folder $folder))
+                Write-CcmdmLog ("  snapshot: {0}" -f $folder)
+            } catch {
+                Write-CcmdmLog ("  snapshot fail {0}: {1}" -f $folder, $_.Exception.Message) "WARN"
+            }
+        }
+    }
+
+    Write-CcmdmLog ("  -> {0} FolderManifest" -f $manifests.Count)
     Write-CcmdmLog "  json yaziliyor..."
-    $payload = [ordered]@{
-        schemaVersion = 1; generator = "CCMDM-Export.ps1"; generatorVer = $ScriptVersion
-        rootId = $r.id; rootPath = $r.path; scannedAt = (Get-Date).ToString("o")
-        topLevel = $diag
-        manifestCount = $manifests.Count; manifests = @($manifests)
+    Set-Content -LiteralPath (Join-Path $outDir "_progress.txt") -Value ("json {0}" -f $r.id) -Encoding UTF8
+
+    $payload = @{
+        schemaVersion = 1
+        generator     = "CCMDM-Export.ps1"
+        generatorVer  = $ScriptVersion
+        rootId        = [string]$r.id
+        rootPath      = [string]$r.path
+        scannedAt     = (Get-Date).ToString("o")
+        topLevel      = @($diag)
+        manifestCount = [int]$manifests.Count
+        manifests     = @($manifests.ToArray())
     }
-    $json = ConvertTo-CcmdmJson -Object $payload
+
+    try {
+        $json = ConvertTo-CcmdmJson -Object $payload
+    } catch {
+        # Minimal fallback JSON
+        $json = "{`"rootId`":`"$($r.id)`",`"error`":`"json_failed`",`"manifestCount`":$($manifests.Count)}"
+        Write-CcmdmLog "  fallback json kullanildi" "WARN"
+    }
+
     $fileName = ("{0}.json" -f ($r.id -replace '[^\w\-]+', '_'))
-    [System.IO.File]::WriteAllText((Join-Path $outDir $fileName), $json, [System.Text.UTF8Encoding]::new($false))
+    $full = Join-Path $outDir $fileName
+    [System.IO.File]::WriteAllText($full, $json, [System.Text.UTF8Encoding]::new($false))
     $filesForGh[("cafes/{0}/{1}/{2}" -f $cafeSlug, $stamp, $fileName)] = $json
-    $allSummaries += [ordered]@{
-        rootId = $r.id; rootPath = $r.path; manifestCount = $manifests.Count
-        file = $fileName; topLevelCount = $diag.Count
+    $allSummaries += @{
+        rootId = [string]$r.id; rootPath = [string]$r.path
+        manifestCount = [int]$manifests.Count; file = $fileName; topLevelCount = [int]$diag.Count
     }
-    Write-CcmdmLog ("  json ok ({0} ch)" -f $json.Length)
+    Write-CcmdmLog ("  json ok file={0} ch={1}" -f $fileName, $json.Length)
 }
 
 Write-CcmdmLog "meta yaziliyor..."
-$meta = [ordered]@{
-    schemaVersion = 1; scriptVersion = $ScriptVersion
+$meta = @{
+    schemaVersion = 1
+    scriptVersion = $ScriptVersion
     cafeName = $cafeSlug; cafeSlug = $cafeSlug; stamp = $stamp
-    hostname = $env:COMPUTERNAME; userName = $env:USERNAME
+    hostname = [string]$env:COMPUTERNAME; userName = [string]$env:USERNAME
     os = [string][Environment]::OSVersion.VersionString
     psVersion = $PSVersionTable.PSVersion.ToString()
     scannedAt = (Get-Date).ToString("o"); skipDrive = "C:\"; maxDepth = $MaxDepth
-    roots = $allSummaries; driveDiags = $driveDiags
+    roots = @($allSummaries); driveDiags = $driveDiags
     logFile = $LogFile; warning = $warn
     tokenLen = $(if ($env:CCMDM_GH_TOKEN) { $env:CCMDM_GH_TOKEN.Length } else { 0 })
-    note = "FolderManifest corpus for Cyber-Cafe-Management-DB (CCMDM). No game payloads."
+    note = "FolderManifest corpus for CCMDM. No game payloads."
 }
-$metaJson = ConvertTo-CcmdmJson -Object $meta
+try { $metaJson = ConvertTo-CcmdmJson -Object $meta }
+catch { $metaJson = "{`"cafeSlug`":`"$cafeSlug`",`"error`":`"meta_json_failed`"}" }
+
 [System.IO.File]::WriteAllText((Join-Path $outDir "meta.json"), $metaJson, [System.Text.UTF8Encoding]::new($false))
 $filesForGh[("cafes/{0}/{1}/meta.json" -f $cafeSlug, $stamp)] = $metaJson
+Set-Content -LiteralPath (Join-Path $outDir "_progress.txt") -Value "ready_to_push" -Encoding UTF8
 Write-CcmdmLog ("yerel cikti: {0} filesForGh={1}" -f $outDir, $filesForGh.Count)
 
 $gh = Get-GitHubConfig
@@ -356,7 +419,8 @@ if ($LocalOnly) {
     try {
         $url = Publish-ToGitHub -Gh $gh -CafeSlug $cafeSlug -Stamp $stamp -Files $filesForGh
         Write-CcmdmLog ("GitHub OK: {0}" -f $url) "OK"
-        $sum = ($allSummaries | Measure-Object -Property manifestCount -Sum).Sum
+        $sum = 0
+        foreach ($s in $allSummaries) { $sum += [int]$s.manifestCount }
         Write-Sonuc @"
 CCMDM tamam.
 slug: $cafeSlug
@@ -366,7 +430,7 @@ log: $LogFile
 "@
     } catch {
         Write-CcmdmLog ("GitHub push basarisiz: {0}" -f $_.Exception.Message) "ERROR"
-        Write-Sonuc "CCMDM HATA push: $($_.Exception.Message)`nlog=$LogFile"
+        Write-Sonuc "CCMDM HATA push: $($_.Exception.Message)`nlog=$LogFile`nout=$outDir"
         exit 3
     }
 }
