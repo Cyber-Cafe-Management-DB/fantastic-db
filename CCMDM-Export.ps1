@@ -1,5 +1,5 @@
 # CCMDM (Cyber-Cafe-Management-DB) FolderManifest exporter + GitHub uploader
-# v2.4 — fingerprint (desktop + cafe/diskless imzalari); recycle/SVI haric
+# v2.5 — OS friendly (Windows 11 25H2 vb.); fingerprint + recycle/SVI haric
 # PowerShell 5.1. ASCII Turkce log. Git gerekmez.
 
 [CmdletBinding()]
@@ -14,7 +14,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$ScriptVersion = "2.4.0"
+$ScriptVersion = "2.5.0"
 if (-not $PSBoundParameters.ContainsKey("Silent")) { $Silent = $true }
 
 if ($Owner) { $env:CCMDM_GH_OWNER = $Owner }
@@ -43,6 +43,111 @@ function Write-Sonuc([string]$text) {
     } catch {
         Write-CcmdmLog ("SONUC yazilamadi: {0}" -f $_.Exception.Message) "WARN"
     }
+}
+
+function Get-WindowsOsInfo {
+    # Ornek cikti: "Windows 11, version 25H2 (build 26200.6584)"
+    $nt = [string][Environment]::OSVersion.VersionString
+    $ver = [Environment]::OSVersion.Version
+    $info = @{
+        ntVersionString = $nt
+        major = $ver.Major
+        minor = $ver.Minor
+        build = $ver.Build
+        revision = $ver.Revision
+        productName = $null
+        displayVersion = $null
+        currentBuild = $null
+        ubr = $null
+        editionId = $null
+        architecture = $null
+        caption = $null
+        friendly = $null
+    }
+
+    try {
+        $key = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
+        $info.productName = [string](Get-ItemProperty -Path $key -Name ProductName -ErrorAction SilentlyContinue).ProductName
+        $info.displayVersion = [string](Get-ItemProperty -Path $key -Name DisplayVersion -ErrorAction SilentlyContinue).DisplayVersion
+        $info.currentBuild = [string](Get-ItemProperty -Path $key -Name CurrentBuild -ErrorAction SilentlyContinue).CurrentBuild
+        $ubrObj = Get-ItemProperty -Path $key -Name UBR -ErrorAction SilentlyContinue
+        if ($ubrObj) { $info.ubr = [int]$ubrObj.UBR }
+        $info.editionId = [string](Get-ItemProperty -Path $key -Name EditionID -ErrorAction SilentlyContinue).EditionID
+        $cm = Get-ItemProperty -Path $key -Name CurrentMajorVersionNumber -ErrorAction SilentlyContinue
+        if ($cm) { $info.currentMajorVersionNumber = [int]$cm.CurrentMajorVersionNumber }
+    } catch {
+        Write-CcmdmLog ("OS registry okunamadi: {0}" -f $_.Exception.Message) "WARN"
+    }
+
+    try {
+        $os = Get-CimInstance -ClassName Win32_OperatingSystem -ErrorAction Stop
+        $info.caption = [string]$os.Caption
+        $info.architecture = [string]$os.OSArchitecture
+        if (-not $info.currentBuild -and $os.BuildNumber) { $info.currentBuild = [string]$os.BuildNumber }
+    } catch {
+        try {
+            $os = Get-WmiObject -Class Win32_OperatingSystem -ErrorAction Stop
+            $info.caption = [string]$os.Caption
+            $info.architecture = [string]$os.OSArchitecture
+            if (-not $info.currentBuild -and $os.BuildNumber) { $info.currentBuild = [string]$os.BuildNumber }
+        } catch { }
+    }
+
+    $buildNum = 0
+    if ($info.currentBuild) { [void][int]::TryParse($info.currentBuild, [ref]$buildNum) }
+    if ($buildNum -le 0) { $buildNum = [int]$ver.Build }
+
+    # Build -> Win10/11 + DisplayVersion fallback tablosu
+    # DisplayVersion (22H2/24H2/25H2) registry'de varsa onu tercih et
+    $family = $null
+    if ($info.currentMajorVersionNumber -ge 11 -or $buildNum -ge 22000) {
+        $family = 'Windows 11'
+    } elseif ($buildNum -ge 10240) {
+        $family = 'Windows 10'
+    } else {
+        $family = 'Windows'
+    }
+
+    $release = $info.displayVersion
+    if ([string]::IsNullOrWhiteSpace($release)) {
+        $map = @{
+            10240 = '1507'; 10586 = '1511'; 14393 = '1607'; 15063 = '1703'
+            16299 = '1709'; 17134 = '1803'; 17763 = '1809'; 18362 = '1903'
+            18363 = '1909'; 19041 = '20H1'; 19042 = '20H2'; 19043 = '21H1'
+            19044 = '21H2'; 19045 = '22H2'
+            22000 = '21H2'; 22621 = '22H2'; 22631 = '23H2'
+            26100 = '24H2'; 26200 = '25H2'
+        }
+        if ($map.ContainsKey($buildNum)) { $release = $map[$buildNum] }
+        else {
+            # en yakin bilinen alt build
+            $known = ($map.Keys | Sort-Object)
+            $prev = $null
+            foreach ($k in $known) {
+                if ($k -le $buildNum) { $prev = $k } else { break }
+            }
+            if ($null -ne $prev) { $release = $map[$prev] }
+        }
+    }
+
+    $buildFull = [string]$buildNum
+    if ($null -ne $info.ubr -and $info.ubr -gt 0) {
+        $buildFull = "{0}.{1}" -f $buildNum, $info.ubr
+    }
+
+    if ($family -and $release) {
+        $info.friendly = ("{0}, version {1} (build {2})" -f $family, $release, $buildFull)
+    } elseif ($info.caption) {
+        $info.friendly = ("{0} (build {1})" -f $info.caption.Trim(), $buildFull)
+    } else {
+        $info.friendly = $nt
+    }
+
+    if ($info.architecture) {
+        $info.friendly = ("{0} [{1}]" -f $info.friendly, $info.architecture)
+    }
+
+    return $info
 }
 
 function Get-RandomCafeSlug {
@@ -587,6 +692,14 @@ foreach ($r in $roots) {
 # Desktop + kafe/diskless/oyun-menu fingerprint
 Write-CcmdmLog "fingerprint toplaniyor (desktop + process/servis imzalari)..."
 $fingerprint = $null
+$osInfo = $null
+try {
+    $osInfo = Get-WindowsOsInfo
+    Write-CcmdmLog ("  os={0}" -f $osInfo.friendly)
+} catch {
+    Write-CcmdmLog ("OS bilgisi alinamadi: {0}" -f $_.Exception.Message) "WARN"
+    $osInfo = @{ friendly = [string][Environment]::OSVersion.VersionString; error = $_.Exception.Message }
+}
 try {
     $fingerprint = Get-CafeFingerprint
     $g = $fingerprint.guessed
@@ -597,6 +710,11 @@ try {
 } catch {
     Write-CcmdmLog ("fingerprint hata: {0}" -f $_.Exception.Message) "WARN"
     $fingerprint = @{ error = $_.Exception.Message }
+}
+
+# fingerprint icine OS de gom
+if ($fingerprint -is [hashtable]) {
+    $fingerprint.os = $osInfo
 }
 
 # Desktop klasorunu de ayri "kok" gibi kaydet (oyun gosterme yazilimi kisayollari)
@@ -636,7 +754,8 @@ $meta = @{
     scriptVersion = $ScriptVersion
     cafeName = $cafeSlug; cafeSlug = $cafeSlug; stamp = $stamp
     hostname = [string]$env:COMPUTERNAME; userName = [string]$env:USERNAME
-    os = [string][Environment]::OSVersion.VersionString
+    os = $(if ($osInfo -and $osInfo.friendly) { $osInfo.friendly } else { [string][Environment]::OSVersion.VersionString })
+    osInfo = $osInfo
     psVersion = $PSVersionTable.PSVersion.ToString()
     scannedAt = (Get-Date).ToString("o"); skipDrive = "C:\"; maxDepth = $MaxDepth
     roots = @($allSummaries); driveDiags = $driveDiags
@@ -677,6 +796,7 @@ if ($LocalOnly) {
         Write-Sonuc @"
 CCMDM tamam.
 slug: $cafeSlug
+os: $(if ($osInfo) { $osInfo.friendly } else { '' })
 manifestToplam: $sum
 cafeAutomation: $gAuto
 diskless: $gDisk
