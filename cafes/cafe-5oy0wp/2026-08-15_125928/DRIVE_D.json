@@ -1,0 +1,65 @@
+{
+    "manifests":  [
+                      {
+                          "manifestHash":  "f11456af9f0fbd394631412a00e665c0bdc95ce9a3b215f6c0ab0a02a37e6e3e",
+                          "entries":  [
+                                          "test/",
+                                          "GitHubDesktop.exe",
+                                          "test.txt",
+                                          "testgame.exe"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "D:\\testgame",
+                          "schemaVersion":  1,
+                          "exePath":  "D:\\testgame\\GitHubDesktop.exe",
+                          "exeMetadata":  [
+                                              {
+                                                  "size":  401184,
+                                                  "companyName":  "GitHub, Inc.",
+                                                  "relativePath":  "GitHubDesktop.exe",
+                                                  "fileVersion":  "3.6.4",
+                                                  "productName":  "GitHub Desktop",
+                                                  "name":  "GitHubDesktop.exe",
+                                                  "productVersion":  "3.6.4",
+                                                  "originalFilename":  "electron.exe"
+                                              },
+                                              {
+                                                  "size":  0,
+                                                  "companyName":  "",
+                                                  "relativePath":  "testgame.exe",
+                                                  "fileVersion":  "",
+                                                  "productName":  "",
+                                                  "name":  "testgame.exe",
+                                                  "productVersion":  "",
+                                                  "originalFilename":  ""
+                                              }
+                                          ]
+                      }
+                  ],
+    "scannedAt":  "2026-08-15T12:59:29.1499014+03:00",
+    "rootPath":  "D:\\",
+    "generatorVer":  "2.3.0",
+    "manifestCount":  1,
+    "rootId":  "DRIVE_D",
+    "generator":  "CCMDM-Export.ps1",
+    "topLevel":  [
+                     [
+                         {
+                             "exeHere":  false,
+                             "name":  "$RECYCLE.BIN",
+                             "isDir":  true
+                         },
+                         {
+                             "exeHere":  false,
+                             "name":  "System Volume Information",
+                             "isDir":  true
+                         },
+                         {
+                             "exeHere":  true,
+                             "name":  "testgame",
+                             "isDir":  true
+                         }
+                     ]
+                 ],
+    "schemaVersion":  1
+}

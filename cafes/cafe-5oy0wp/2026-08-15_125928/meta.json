@@ -1,0 +1,48 @@
+{
+    "cafeName":  "cafe-5oy0wp",
+    "stamp":  "2026-08-15_125928",
+    "warning":  null,
+    "userName":  "Administrator",
+    "scriptVersion":  "2.3.0",
+    "logFile":  "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\ccmdm-20260815_125928.log",
+    "tokenLen":  93,
+    "skipDrive":  "C:\\",
+    "cafeSlug":  "cafe-5oy0wp",
+    "hostname":  "MASTER",
+    "note":  "FolderManifest corpus for CCMDM. No game payloads.",
+    "schemaVersion":  1,
+    "roots":  [
+                  {
+                      "topLevelCount":  1,
+                      "rootId":  "DRIVE_D",
+                      "manifestCount":  1,
+                      "file":  "DRIVE_D.json",
+                      "rootPath":  "D:\\"
+                  }
+              ],
+    "driveDiags":  {
+                       "DRIVE_D":  [
+                                       [
+                                           {
+                                               "exeHere":  false,
+                                               "name":  "$RECYCLE.BIN",
+                                               "isDir":  true
+                                           },
+                                           {
+                                               "exeHere":  false,
+                                               "name":  "System Volume Information",
+                                               "isDir":  true
+                                           },
+                                           {
+                                               "exeHere":  true,
+                                               "name":  "testgame",
+                                               "isDir":  true
+                                           }
+                                       ]
+                                   ]
+                   },
+    "scannedAt":  "2026-08-15T12:59:29.2008615+03:00",
+    "maxDepth":  6,
+    "os":  "Microsoft Windows NT 10.0.26200.0",
+    "psVersion":  "5.1.26100.9168"
+}
