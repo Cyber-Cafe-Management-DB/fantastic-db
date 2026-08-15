@@ -55,7 +55,7 @@ function Get-RandomCafeSlug {
 
 function ConvertTo-CcmdmJson {
     param($Object)
-    # PS 5.1: Generic.List / ordered bazen takiliyor; once düz diziye cevir
+    # PS 5.1: Generic.List / ordered bazen takiliyor; once duz diziye cevir
     try {
         return (ConvertTo-Json -InputObject $Object -Depth 10 -Compress:$false)
     } catch {
