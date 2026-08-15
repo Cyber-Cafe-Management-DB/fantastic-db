@@ -6,7 +6,7 @@ REM 2) RunAs env MIRAS ALMAZ -> token -Token parametresiyle gecilir
 set "CCMDM_GH_OWNER=Cyber-Cafe-Management-DB"
 set "CCMDM_GH_REPO=fantastic-db"
 set "CCMDM_GH_BRANCH=main"
-set "CCMDM_GH_TOKEN=REPLACE_ME
+set "CCMDM_GH_TOKEN=REPLACE_ME"
 
 set "CCMDM_STATUS=%TEMP%\ccmdm-last-run.log"
 set "CCMDM_GO=%TEMP%\ccmdm-go.ps1"
