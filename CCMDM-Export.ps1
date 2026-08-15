@@ -1,5 +1,5 @@
 # CCMDM (Cyber-Cafe-Management-DB) FolderManifest exporter + GitHub uploader
-# v2.3 — JSON yazimi guvenli; exe yoksa bile ust klasor snapshot; push kesin denenir
+# v2.4 — fingerprint (desktop + cafe/diskless imzalari); recycle/SVI haric
 # PowerShell 5.1. ASCII Turkce log. Git gerekmez.
 
 [CmdletBinding()]
@@ -14,7 +14,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$ScriptVersion = "2.3.0"
+$ScriptVersion = "2.4.0"
 if (-not $PSBoundParameters.ContainsKey("Silent")) { $Silent = $true }
 
 if ($Owner) { $env:CCMDM_GH_OWNER = $Owner }
@@ -178,16 +178,215 @@ function New-FolderManifest {
 
 function Test-ShouldSkipDir {
     param([string]$Name)
+    # $RECYCLE.BIN / System Volume Information ve benzeri
     if ($Name -match '(?i)^\$') { return $true }
+    if ($Name -match '(?i)^System Volume Information$') { return $true }
     $skipExact = @(
         'TOOLS', 'Tools', 'Temp', 'tmp', '__Installer', '_CommonRedist', '_checkpoints',
         'Steam Controller Configs', 'Steamworks Shared', 'node_modules', '.git',
-        'System Volume Information', 'Recovery', 'PerfLogs',
+        'Recovery', 'PerfLogs',
         'Windows', 'Program Files', 'Program Files (x86)', 'ProgramData', 'Users', 'Documents and Settings'
     )
     foreach ($s in $skipExact) { if ($Name -eq $s) { return $true } }
     if ($Name -match '(?i)redist|directx|vcredist|dotnet|openal|physx|xna') { return $true }
     return $false
+}
+
+function Get-LnkTarget {
+    param([string]$LnkPath)
+    try {
+        $sh = New-Object -ComObject WScript.Shell
+        $sc = $sh.CreateShortcut($LnkPath)
+        return [string]$sc.TargetPath
+    } catch { return $null }
+}
+
+function Get-DesktopInventory {
+    $desk = [Environment]::GetFolderPath("Desktop")
+    $publicDesk = Join-Path $env:PUBLIC "Desktop"
+    $roots = @()
+    if ($desk) { $roots += $desk }
+    if ($publicDesk -and (Test-Path -LiteralPath $publicDesk) -and $publicDesk -ne $desk) { $roots += $publicDesk }
+
+    $items = New-Object System.Collections.ArrayList
+    foreach ($root in $roots) {
+        if (-not (Test-Path -LiteralPath $root)) { continue }
+        Get-ChildItem -LiteralPath $root -Force -ErrorAction SilentlyContinue | ForEach-Object {
+            $target = $null
+            if ($_.Extension -eq '.lnk') { $target = Get-LnkTarget -LnkPath $_.FullName }
+            [void]$items.Add(@{
+                desktopRoot = [string]$root
+                name        = [string]$_.Name
+                isDir       = [bool]$_.PSIsContainer
+                target      = $target
+            })
+        }
+    }
+    return @{
+        paths = @($roots)
+        items = @($items.ToArray())
+    }
+}
+
+function Test-NameHit {
+    param([string]$Text, [string[]]$Needles)
+    if ([string]::IsNullOrWhiteSpace($Text)) { return $false }
+    $t = $Text.ToLowerInvariant()
+    foreach ($n in $Needles) {
+        if ($t.Contains($n.ToLowerInvariant())) { return $true }
+    }
+    return $false
+}
+
+function Get-CafeFingerprint {
+    # Imza listeleri — genisletilebilir
+    $cafeAuto = @(
+        'handycafe', 'handy cafe', 'pancafe', 'pan cafe', 'everycafe', 'every cafe',
+        'cafebonzer', 'softcafe', 'antamedia', 'smartcafe', 'cafelatte', 'keycafe',
+        'easycafe', 'cafeshare', 'gameover cafe', 'waitercafe', 'timestop',
+        'cafeclient', 'cafeserver', 'nexcafe', 'truecafe', 'cybercafe'
+    )
+    $diskless = @(
+        'ccboot', 'ccu diskless', 'ccudiskless', 'ccuclient', 'netcafem', 'netcafe',
+        'icafecloud', 'diskless', 'thinstation', 'liberator', 'ccbootclient',
+        'youngzsoft', 'disklessos'
+    )
+    $gameMenu = @(
+        'nextplay', 'icafemenu', 'icafeclient', 'icafe', 'centerm', 'tikir',
+        'gamemenu', 'gameportal', 'cyberarena', 'hsmanager', 'flashcafe',
+        'oyunkafe', 'gamebox', 'launcher menu'
+    )
+
+    $procHits = New-Object System.Collections.ArrayList
+    $svcHits = New-Object System.Collections.ArrayList
+    $pathHits = New-Object System.Collections.ArrayList
+
+    # Process listesi (tezgahta / tray'de yasayanlar genelde burada)
+    try {
+        Get-Process -ErrorAction SilentlyContinue | ForEach-Object {
+            $n = $_.ProcessName
+            $path = $null
+            try { $path = $_.Path } catch { }
+            $blob = "$n $path"
+            $cats = @()
+            if (Test-NameHit $blob $cafeAuto) { $cats += 'cafeAutomation' }
+            if (Test-NameHit $blob $diskless) { $cats += 'diskless' }
+            if (Test-NameHit $blob $gameMenu) { $cats += 'gameMenu' }
+            if ($cats.Count -gt 0) {
+                [void]$procHits.Add(@{
+                    name = [string]$n
+                    path = [string]$path
+                    categories = $cats
+                })
+            }
+        }
+    } catch {
+        Write-CcmdmLog ("process listesi alinamadi: {0}" -f $_.Exception.Message) "WARN"
+    }
+
+    # Servisler (CCBoot client vs. sik servis olarak kalir)
+    try {
+        Get-Service -ErrorAction SilentlyContinue | ForEach-Object {
+            $blob = "$($_.Name) $($_.DisplayName)"
+            $cats = @()
+            if (Test-NameHit $blob $cafeAuto) { $cats += 'cafeAutomation' }
+            if (Test-NameHit $blob $diskless) { $cats += 'diskless' }
+            if (Test-NameHit $blob $gameMenu) { $cats += 'gameMenu' }
+            if ($cats.Count -gt 0) {
+                [void]$svcHits.Add(@{
+                    name = [string]$_.Name
+                    displayName = [string]$_.DisplayName
+                    status = [string]$_.Status
+                    categories = $cats
+                })
+            }
+        }
+    } catch {
+        Write-CcmdmLog ("servis listesi alinamadi: {0}" -f $_.Exception.Message) "WARN"
+    }
+
+    # Tipik kurulum yollari
+    $probePaths = @(
+        'C:\CCBootClient', 'C:\CCBoot', 'C:\Program Files\CCBoot', 'C:\Program Files (x86)\CCBoot',
+        'C:\Program Files\CCU', 'C:\Program Files (x86)\CCU',
+        'C:\NetCafeM', 'C:\Program Files\NetCafeM', 'C:\Program Files (x86)\NetCafeM',
+        'C:\HandyCafe', 'C:\Program Files\HandyCafe', 'C:\Program Files (x86)\HandyCafe',
+        'C:\PanCafe', 'C:\Program Files\PanCafe', 'C:\Program Files (x86)\PanCafe',
+        'C:\EveryCafe', 'C:\Program Files\EveryCafe',
+        'C:\iCafeMenu', 'C:\Program Files\iCafeMenu', 'C:\Program Files (x86)\iCafeMenu',
+        'C:\Program Files\NextPlay', 'C:\Program Files (x86)\NextPlay',
+        "$env:LOCALAPPDATA\NextPlay", "$env:ProgramData\NextPlay"
+    )
+    foreach ($pp in $probePaths) {
+        if ($pp -and (Test-Path -LiteralPath $pp)) {
+            $cats = @()
+            if (Test-NameHit $pp $cafeAuto) { $cats += 'cafeAutomation' }
+            if (Test-NameHit $pp $diskless) { $cats += 'diskless' }
+            if (Test-NameHit $pp $gameMenu) { $cats += 'gameMenu' }
+            if ($cats.Count -eq 0) { $cats = @('unknownInstall') }
+            [void]$pathHits.Add(@{ path = [string]$pp; categories = $cats })
+        }
+    }
+
+    $desktop = Get-DesktopInventory
+
+    # Desktop kisayol / dosya adlarindan tahmin
+    $desktopHints = New-Object System.Collections.ArrayList
+    foreach ($it in $desktop.items) {
+        $blob = "$($it.name) $($it.target)"
+        $cats = @()
+        if (Test-NameHit $blob $cafeAuto) { $cats += 'cafeAutomation' }
+        if (Test-NameHit $blob $diskless) { $cats += 'diskless' }
+        if (Test-NameHit $blob $gameMenu) { $cats += 'gameMenu' }
+        if ($cats.Count -gt 0) {
+            [void]$desktopHints.Add(@{
+                name = $it.name; target = $it.target; categories = $cats
+            })
+        }
+    }
+
+    $guessCafe = $null
+    $guessDisk = $null
+    $guessMenu = $null
+    foreach ($catPair in @(
+        @{ cat = 'cafeAutomation'; dest = 'guessCafe' },
+        @{ cat = 'diskless'; dest = 'guessDisk' },
+        @{ cat = 'gameMenu'; dest = 'guessMenu' }
+    )) {
+        $scores = @{}
+        foreach ($bucket in @($procHits, $svcHits, $pathHits, $desktopHints)) {
+            foreach ($h in $bucket) {
+                if ($h.categories -notcontains $catPair.cat) { continue }
+                $label = $null
+                if ($h.name) { $label = $h.name }
+                elseif ($h.displayName) { $label = $h.displayName }
+                elseif ($h.path) { $label = Split-Path -Leaf $h.path }
+                if (-not $label) { continue }
+                $key = $label.ToLowerInvariant()
+                if (-not $scores.ContainsKey($key)) { $scores[$key] = @{ label = $label; score = 0 } }
+                $scores[$key].score++
+            }
+        }
+        if ($scores.Count -gt 0) {
+            $best = $scores.GetEnumerator() | Sort-Object { $_.Value.score } -Descending | Select-Object -First 1
+            if ($catPair.dest -eq 'guessCafe') { $guessCafe = $best.Value.label }
+            elseif ($catPair.dest -eq 'guessDisk') { $guessDisk = $best.Value.label }
+            else { $guessMenu = $best.Value.label }
+        }
+    }
+
+    return @{
+        desktop           = $desktop
+        desktopHints      = @($desktopHints.ToArray())
+        processesMatched  = @($procHits.ToArray())
+        servicesMatched   = @($svcHits.ToArray())
+        installPathsFound = @($pathHits.ToArray())
+        guessed = @{
+            cafeAutomation = $guessCafe
+            diskless       = $guessDisk
+            gameMenu       = $guessMenu
+        }
+    }
 }
 
 function Walk-GameRoots {
@@ -229,6 +428,7 @@ function Get-TopLevelDiag {
     $items = New-Object System.Collections.ArrayList
     try {
         Get-ChildItem -LiteralPath $Root -Force -ErrorAction Stop | Select-Object -First 100 | ForEach-Object {
+            if (Test-ShouldSkipDir -Name $_.Name) { return }
             $exeHere = $false
             if ($_.PSIsContainer) {
                 $exeHere = [bool](Get-ChildItem -LiteralPath $_.FullName -Filter *.exe -File -ErrorAction SilentlyContinue | Select-Object -First 1)
@@ -384,6 +584,52 @@ foreach ($r in $roots) {
     Write-CcmdmLog ("  json ok file={0} ch={1}" -f $fileName, $json.Length)
 }
 
+# Desktop + kafe/diskless/oyun-menu fingerprint
+Write-CcmdmLog "fingerprint toplaniyor (desktop + process/servis imzalari)..."
+$fingerprint = $null
+try {
+    $fingerprint = Get-CafeFingerprint
+    $g = $fingerprint.guessed
+    Write-CcmdmLog ("  desktop items={0}" -f @($fingerprint.desktop.items).Count)
+    Write-CcmdmLog ("  guessed cafeAutomation={0}" -f $g.cafeAutomation)
+    Write-CcmdmLog ("  guessed diskless={0}" -f $g.diskless)
+    Write-CcmdmLog ("  guessed gameMenu={0}" -f $g.gameMenu)
+} catch {
+    Write-CcmdmLog ("fingerprint hata: {0}" -f $_.Exception.Message) "WARN"
+    $fingerprint = @{ error = $_.Exception.Message }
+}
+
+# Desktop klasorunu de ayri "kok" gibi kaydet (oyun gosterme yazilimi kisayollari)
+try {
+    $deskInfo = $fingerprint.desktop
+    if ($deskInfo -and $deskInfo.paths) {
+        $deskPayload = @{
+            schemaVersion = 1
+            generator     = "CCMDM-Export.ps1"
+            generatorVer  = $ScriptVersion
+            rootId        = "DESKTOP"
+            rootPaths     = @($deskInfo.paths)
+            scannedAt     = (Get-Date).ToString("o")
+            items         = @($deskInfo.items)
+        }
+        $deskJson = ConvertTo-CcmdmJson -Object $deskPayload
+        [System.IO.File]::WriteAllText((Join-Path $outDir "DESKTOP.json"), $deskJson, [System.Text.UTF8Encoding]::new($false))
+        $filesForGh[("cafes/{0}/{1}/DESKTOP.json" -f $cafeSlug, $stamp)] = $deskJson
+        Write-CcmdmLog ("  DESKTOP.json ok ch={0}" -f $deskJson.Length)
+    }
+} catch {
+    Write-CcmdmLog ("DESKTOP.json yazilamadi: {0}" -f $_.Exception.Message) "WARN"
+}
+
+try {
+    $fpJson = ConvertTo-CcmdmJson -Object $fingerprint
+    [System.IO.File]::WriteAllText((Join-Path $outDir "fingerprint.json"), $fpJson, [System.Text.UTF8Encoding]::new($false))
+    $filesForGh[("cafes/{0}/{1}/fingerprint.json" -f $cafeSlug, $stamp)] = $fpJson
+    Write-CcmdmLog ("  fingerprint.json ok ch={0}" -f $fpJson.Length)
+} catch {
+    Write-CcmdmLog ("fingerprint.json yazilamadi: {0}" -f $_.Exception.Message) "WARN"
+}
+
 Write-CcmdmLog "meta yaziliyor..."
 $meta = @{
     schemaVersion = 1
@@ -394,9 +640,10 @@ $meta = @{
     psVersion = $PSVersionTable.PSVersion.ToString()
     scannedAt = (Get-Date).ToString("o"); skipDrive = "C:\"; maxDepth = $MaxDepth
     roots = @($allSummaries); driveDiags = $driveDiags
+    guessed = $(if ($fingerprint -and $fingerprint.guessed) { $fingerprint.guessed } else { $null })
     logFile = $LogFile; warning = $warn
     tokenLen = $(if ($env:CCMDM_GH_TOKEN) { $env:CCMDM_GH_TOKEN.Length } else { 0 })
-    note = "FolderManifest corpus for CCMDM. No game payloads."
+    note = "FolderManifest + cafe fingerprint for CCMDM. No game payloads."
 }
 try { $metaJson = ConvertTo-CcmdmJson -Object $meta }
 catch { $metaJson = "{`"cafeSlug`":`"$cafeSlug`",`"error`":`"meta_json_failed`"}" }
@@ -421,10 +668,19 @@ if ($LocalOnly) {
         Write-CcmdmLog ("GitHub OK: {0}" -f $url) "OK"
         $sum = 0
         foreach ($s in $allSummaries) { $sum += [int]$s.manifestCount }
+        $gAuto = $null; $gDisk = $null; $gMenu = $null
+        if ($fingerprint -and $fingerprint.guessed) {
+            $gAuto = $fingerprint.guessed.cafeAutomation
+            $gDisk = $fingerprint.guessed.diskless
+            $gMenu = $fingerprint.guessed.gameMenu
+        }
         Write-Sonuc @"
 CCMDM tamam.
 slug: $cafeSlug
 manifestToplam: $sum
+cafeAutomation: $gAuto
+diskless: $gDisk
+gameMenu: $gMenu
 url: $url
 log: $LogFile
 "@
