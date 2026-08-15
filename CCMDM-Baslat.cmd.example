@@ -1,39 +1,43 @@
 @echo off
-REM CCMDM (Cyber-Cafe-Management-DB) - tek dosya launcher
-REM Kafe: bu .cmd'ye cift tikla. UAC (aciksa) onayla; sonra pencere yok, arka plan.
-REM Sen: asagidaki 4 degeri doldurup cafeye at. Token'i public GitHub'a koyma.
+REM CCMDM Baslat v3.1
+REM 1) RunAs+Hidden YASAK (UAC sessiz fail)
+REM 2) RunAs env MIRAS ALMAZ -> token -Token parametresiyle gecilir
 
 set "CCMDM_GH_OWNER=Cyber-Cafe-Management-DB"
 set "CCMDM_GH_REPO=fantastic-db"
 set "CCMDM_GH_BRANCH=main"
-set "CCMDM_GH_TOKEN=REPLACE_ME"
+set "CCMDM_GH_TOKEN=REPLACE_ME
 
-REM --- altini degistirme ---
-set "CCMDM_PS1_URL=https://raw.githubusercontent.com/%CCMDM_GH_OWNER%/%CCMDM_GH_REPO%/%CCMDM_GH_BRANCH%/CCMDM-Export.ps1"
-set "CCMDM_BOOT=%TEMP%\ccmdm-boot-%RANDOM%%RANDOM%.ps1"
+set "CCMDM_STATUS=%TEMP%\ccmdm-last-run.log"
+set "CCMDM_GO=%TEMP%\ccmdm-go.ps1"
+set "CCMDM_GO_URL=https://raw.githubusercontent.com/%CCMDM_GH_OWNER%/%CCMDM_GH_REPO%/%CCMDM_GH_BRANCH%/CCMDM-Go.ps1"
 
-> "%CCMDM_BOOT%" echo $ErrorActionPreference = 'Stop'
->>"%CCMDM_BOOT%" echo $env:CCMDM_GH_OWNER = '%CCMDM_GH_OWNER%'
->>"%CCMDM_BOOT%" echo $env:CCMDM_GH_REPO = '%CCMDM_GH_REPO%'
->>"%CCMDM_BOOT%" echo $env:CCMDM_GH_BRANCH = '%CCMDM_GH_BRANCH%'
->>"%CCMDM_BOOT%" echo $env:CCMDM_GH_TOKEN = '%CCMDM_GH_TOKEN%'
->>"%CCMDM_BOOT%" echo $url = '%CCMDM_PS1_URL%'
->>"%CCMDM_BOOT%" echo $ps1 = Join-Path $env:TEMP ('ccmdm-export-{0}.ps1' -f [guid]::NewGuid().ToString('N'))
->>"%CCMDM_BOOT%" echo $log = Join-Path $env:TEMP 'ccmdm-launcher-error.log'
->>"%CCMDM_BOOT%" echo try {
->>"%CCMDM_BOOT%" echo   [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
->>"%CCMDM_BOOT%" echo   Invoke-WebRequest -Uri $url -OutFile $ps1 -UseBasicParsing
->>"%CCMDM_BOOT%" echo   Unblock-File -LiteralPath $ps1 -ErrorAction SilentlyContinue
->>"%CCMDM_BOOT%" echo   ^& powershell.exe -NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File $ps1 -Silent
->>"%CCMDM_BOOT%" echo } catch {
->>"%CCMDM_BOOT%" echo   $_ ^| Out-File -FilePath $log -Encoding utf8
->>"%CCMDM_BOOT%" echo   exit 1
->>"%CCMDM_BOOT%" echo } finally {
->>"%CCMDM_BOOT%" echo   Remove-Item -LiteralPath $ps1 -Force -ErrorAction SilentlyContinue
->>"%CCMDM_BOOT%" echo   Remove-Item -LiteralPath $PSCommandPath -Force -ErrorAction SilentlyContinue
->>"%CCMDM_BOOT%" echo }
+echo [%DATE% %TIME%] Baslat.cmd start> "%CCMDM_STATUS%"
 
-REM Gizli + admin (UAC aciksa tek onay). Cmd hemen cikar; tarama arka planda.
-start "" /b powershell -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -Command "Start-Process -FilePath 'powershell.exe' -Verb RunAs -WindowStyle Hidden -ArgumentList @('-NoProfile','-ExecutionPolicy','Bypass','-WindowStyle','Hidden','-File','%CCMDM_BOOT%') | Out-Null"
+echo CCMDM: Go script indiriliyor...
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+  "try { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Invoke-WebRequest -Uri $env:CCMDM_GO_URL -OutFile $env:CCMDM_GO -UseBasicParsing; Unblock-File -LiteralPath $env:CCMDM_GO -ErrorAction SilentlyContinue; Add-Content $env:CCMDM_STATUS 'go downloaded ok' } catch { Add-Content $env:CCMDM_STATUS ('download fail: ' + $_.Exception.Message); exit 1 }"
+if errorlevel 1 (
+  echo INDIRME HATASI - log: %CCMDM_STATUS%
+  pause
+  exit /b 1
+)
 
+echo CCMDM: UAC cikarsa Evet de, tarama baslar...
+REM ArgumentList ile Owner/Repo/Branch/Token gec (elevated process env almaz)
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+  "$admin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator); ^
+   Add-Content $env:CCMDM_STATUS ('alreadyAdmin=' + $admin); ^
+   $a = @('-NoProfile','-ExecutionPolicy','Bypass','-File', $env:CCMDM_GO, '-Owner', $env:CCMDM_GH_OWNER, '-Repo', $env:CCMDM_GH_REPO, '-Branch', $env:CCMDM_GH_BRANCH, '-Token', $env:CCMDM_GH_TOKEN); ^
+   if (-not $admin) { Start-Process -FilePath 'powershell.exe' -Verb RunAs -ArgumentList $a } ^
+   else { Start-Process -FilePath 'powershell.exe' -ArgumentList $a }; ^
+   Add-Content $env:CCMDM_STATUS 'Start-Process issued'"
+
+echo.
+echo Arka planda calisiyor. Bitince:
+echo   - Masaustu\CCMDM-SONUC.txt
+echo   - GitHub cafes/cafe-xxxxxx/
+echo   - Log: %TEMP%\ccmdm-last-run.log
+echo.
+timeout /t 4 /nobreak >nul
 exit /b 0
