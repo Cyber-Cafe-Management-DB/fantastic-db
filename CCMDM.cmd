@@ -6,7 +6,7 @@ REM Masaustu\CCMDM-SONUC.txt kalir.
 set "CCMDM_GH_OWNER=Cyber-Cafe-Management-DB"
 set "CCMDM_GH_REPO=fantastic-db"
 set "CCMDM_GH_BRANCH=main"
-set "CCMDM_GH_TOKEN=REPLACE_ME"
+set "CCMDM_GH_TOKEN=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"
 
 set "CCMDM_STATUS=%TEMP%\ccmdm-last-run.log"
 set "CCMDM_GO=%TEMP%\ccmdm-go.ps1"
