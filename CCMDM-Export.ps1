@@ -1,5 +1,5 @@
 # CCMDM (Cyber-Cafe-Management-DB) FolderManifest exporter + GitHub uploader
-# v2.5 — OS friendly (Windows 11 25H2 vb.); fingerprint + recycle/SVI haric
+# v2.6 — her surucuyu AYRI tara (PS "return ,array" birlestirme bug'i duzeltildi)
 # PowerShell 5.1. ASCII Turkce log. Git gerekmez.
 
 [CmdletBinding()]
@@ -14,7 +14,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$ScriptVersion = "2.5.0"
+$ScriptVersion = "2.6.0"
 if (-not $PSBoundParameters.ContainsKey("Silent")) { $Silent = $true }
 
 if ($Owner) { $env:CCMDM_GH_OWNER = $Owner }
@@ -514,23 +514,24 @@ function Walk-GameRoots {
 }
 
 function Get-NonCDriveRoots {
-    $list = New-Object System.Collections.ArrayList
-    Get-PSDrive -PSProvider FileSystem -ErrorAction SilentlyContinue |
-        Where-Object { $_.Root -match '^[A-Za-z]:\\$' -and $_.Root -ne 'C:\' } |
-        ForEach-Object {
-            if (Test-Path -LiteralPath $_.Root) {
-                [void]$list.Add(@{
-                    id   = ("DRIVE_{0}" -f $_.Root.Substring(0, 1).ToUpperInvariant())
-                    path = $_.Root
-                })
-            }
+    # ONEMLI: "return ,$array" + $roots = @(fn) → tek elemanli dis dizi;
+    # foreach bir kez doner, $r.path tum suruculeri boslukla birlestirir
+    # ("D:\ O:\ S:\..."). Pipeline'a tek tek yaz.
+    foreach ($d in @(Get-PSDrive -PSProvider FileSystem -ErrorAction SilentlyContinue)) {
+        $root = [string]$d.Root
+        if ($root -notmatch '^[A-Za-z]:\\$') { continue }
+        if ($root -eq 'C:\') { continue }
+        if (-not (Test-Path -LiteralPath $root)) { continue }
+        [pscustomobject]@{
+            id   = ("DRIVE_{0}" -f $root.Substring(0, 1).ToUpperInvariant())
+            path = $root
         }
-    return ,$list.ToArray()
+    }
 }
 
 function Get-TopLevelDiag {
     param([string]$Root)
-    $items = New-Object System.Collections.ArrayList
+    # Ayni PS dizi tuzagi: pipeline'a item yaz (return ,array YOK)
     try {
         Get-ChildItem -LiteralPath $Root -Force -ErrorAction Stop | Select-Object -First 100 | ForEach-Object {
             if (Test-ShouldSkipDir -Name $_.Name) { return }
@@ -538,12 +539,24 @@ function Get-TopLevelDiag {
             if ($_.PSIsContainer) {
                 $exeHere = [bool](Get-ChildItem -LiteralPath $_.FullName -Filter *.exe -File -ErrorAction SilentlyContinue | Select-Object -First 1)
             }
-            [void]$items.Add(@{ name = [string]$_.Name; isDir = [bool]$_.PSIsContainer; exeHere = $exeHere })
+            [pscustomobject]@{
+                name    = [string]$_.Name
+                isDir   = [bool]$_.PSIsContainer
+                exeHere = [bool]$exeHere
+            }
         }
     } catch {
-        [void]$items.Add(@{ name = ("ERROR: {0}" -f $_.Exception.Message); isDir = $false; exeHere = $false })
+        [pscustomobject]@{
+            name    = ("ERROR: {0}" -f $_.Exception.Message)
+            isDir   = $false
+            exeHere = $false
+        }
     }
-    return ,$items.ToArray()
+}
+
+function Test-IsDriveRootPath {
+    param([string]$Path)
+    return [bool]($Path -match '^[A-Za-z]:\\$')
 }
 
 function Invoke-GitHubApi {
@@ -626,17 +639,27 @@ $filesForGh = @{}
 $driveDiags = @{}
 
 foreach ($r in $roots) {
-    Write-CcmdmLog ("taraniyor: {0}" -f $r.path)
-    $diag = @(Get-TopLevelDiag -Root $r.path)
-    $driveDiags[$r.id] = $diag
+    $rootPath = [string]$r.path
+    $rootId = [string]$r.id
+    # Birlesmis path guvenlik agi (eski bug: "D:\ O:\ S:\...")
+    if (-not (Test-IsDriveRootPath -Path $rootPath)) {
+        Write-CcmdmLog ("gecersiz kok atlandi id={0} path=[{1}]" -f $rootId, $rootPath) "WARN"
+        continue
+    }
+
+    Write-CcmdmLog ("taraniyor: {0}" -f $rootPath)
+    $diag = @(Get-TopLevelDiag -Root $rootPath)
+    $driveDiags[$rootId] = @($diag | ForEach-Object {
+        @{ name = [string]$_.name; isDir = [bool]$_.isDir; exeHere = [bool]$_.exeHere }
+    })
     Write-CcmdmLog ("  ust seviye kayit: {0}" -f $diag.Count)
     foreach ($d in ($diag | Select-Object -First 30)) {
         Write-CcmdmLog ("    - {0} dir={1} exeHere={2}" -f $d.name, $d.isDir, $d.exeHere)
     }
 
     $manifests = New-Object System.Collections.ArrayList
-    try { Walk-GameRoots -Dir $r.path -Depth 0 -MaxDepth $MaxDepth -Out $manifests }
-    catch { Write-CcmdmLog ("tarama hatasi {0}: {1}" -f $r.path, $_.Exception.Message) "WARN" }
+    try { Walk-GameRoots -Dir $rootPath -Depth 0 -MaxDepth $MaxDepth -Out $manifests }
+    catch { Write-CcmdmLog ("tarama hatasi {0}: {1}" -f $rootPath, $_.Exception.Message) "WARN" }
 
     # Hic oyun yoksa: ust seviye normal klasorleri yine snapshot'la (testgame vb.)
     if ($manifests.Count -eq 0) {
@@ -644,7 +667,7 @@ foreach ($r in $roots) {
         foreach ($d in $diag) {
             if (-not $d.isDir) { continue }
             if (Test-ShouldSkipDir -Name $d.name) { continue }
-            $folder = Join-Path $r.path $d.name
+            $folder = Join-Path $rootPath $d.name
             try {
                 [void]$manifests.Add((New-FolderManifest -Folder $folder))
                 Write-CcmdmLog ("  snapshot: {0}" -f $folder)
@@ -656,16 +679,16 @@ foreach ($r in $roots) {
 
     Write-CcmdmLog ("  -> {0} FolderManifest" -f $manifests.Count)
     Write-CcmdmLog "  json yaziliyor..."
-    Set-Content -LiteralPath (Join-Path $outDir "_progress.txt") -Value ("json {0}" -f $r.id) -Encoding UTF8
+    Set-Content -LiteralPath (Join-Path $outDir "_progress.txt") -Value ("json {0}" -f $rootId) -Encoding UTF8
 
     $payload = @{
         schemaVersion = 1
         generator     = "CCMDM-Export.ps1"
         generatorVer  = $ScriptVersion
-        rootId        = [string]$r.id
-        rootPath      = [string]$r.path
+        rootId        = $rootId
+        rootPath      = $rootPath
         scannedAt     = (Get-Date).ToString("o")
-        topLevel      = @($diag)
+        topLevel      = @($driveDiags[$rootId])
         manifestCount = [int]$manifests.Count
         manifests     = @($manifests.ToArray())
     }
@@ -674,16 +697,16 @@ foreach ($r in $roots) {
         $json = ConvertTo-CcmdmJson -Object $payload
     } catch {
         # Minimal fallback JSON
-        $json = "{`"rootId`":`"$($r.id)`",`"error`":`"json_failed`",`"manifestCount`":$($manifests.Count)}"
+        $json = "{`"rootId`":`"$rootId`",`"error`":`"json_failed`",`"manifestCount`":$($manifests.Count)}"
         Write-CcmdmLog "  fallback json kullanildi" "WARN"
     }
 
-    $fileName = ("{0}.json" -f ($r.id -replace '[^\w\-]+', '_'))
+    $fileName = ("{0}.json" -f ($rootId -replace '[^\w\-]+', '_'))
     $full = Join-Path $outDir $fileName
     [System.IO.File]::WriteAllText($full, $json, [System.Text.UTF8Encoding]::new($false))
     $filesForGh[("cafes/{0}/{1}/{2}" -f $cafeSlug, $stamp, $fileName)] = $json
     $allSummaries += @{
-        rootId = [string]$r.id; rootPath = [string]$r.path
+        rootId = $rootId; rootPath = $rootPath
         manifestCount = [int]$manifests.Count; file = $fileName; topLevelCount = [int]$diag.Count
     }
     Write-CcmdmLog ("  json ok file={0} ch={1}" -f $fileName, $json.Length)
