@@ -1,0 +1,24 @@
+{
+    "manifests":  [
+
+                  ],
+    "scannedAt":  "2026-08-15T21:04:45.3433269+03:00",
+    "rootPath":  "O:\\",
+    "generatorVer":  "2.6.0",
+    "manifestCount":  0,
+    "rootId":  "DRIVE_O",
+    "generator":  "CCMDM-Export.ps1",
+    "topLevel":  [
+                     {
+                         "exeHere":  false,
+                         "name":  "ac.rar",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "S.CCacheX",
+                         "isDir":  false
+                     }
+                 ],
+    "schemaVersion":  1
+}
