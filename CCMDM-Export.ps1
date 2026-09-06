@@ -1,5 +1,5 @@
 # CCMDM (Cyber-Cafe-Management-DB) FolderManifest exporter + GitHub uploader
-# v2.6 — her surucuyu AYRI tara (PS "return ,array" birlestirme bug'i duzeltildi)
+# v2.6.1 — Desktop CCMDM-SONUC.txt yok (musteri masasina fis birakma)
 # PowerShell 5.1. ASCII Turkce log. Git gerekmez.
 
 [CmdletBinding()]
@@ -14,7 +14,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$ScriptVersion = "2.6.0"
+$ScriptVersion = "2.6.1"
 if (-not $PSBoundParameters.ContainsKey("Silent")) { $Silent = $true }
 
 if ($Owner) { $env:CCMDM_GH_OWNER = $Owner }
@@ -35,14 +35,8 @@ function Write-CcmdmLog {
 }
 
 function Write-Sonuc([string]$text) {
-    try {
-        $desk = [Environment]::GetFolderPath("Desktop")
-        if (-not $desk) { $desk = $env:USERPROFILE }
-        if ($desk) { Set-Content -LiteralPath (Join-Path $desk "CCMDM-SONUC.txt") -Value $text -Encoding UTF8 }
-        Set-Content -LiteralPath (Join-Path $env:TEMP "CCMDM-SONUC.txt") -Value $text -Encoding UTF8
-    } catch {
-        Write-CcmdmLog ("SONUC yazilamadi: {0}" -f $_.Exception.Message) "WARN"
-    }
+    # Musteri masasina / TEMP'e fis yok — sadece log (Go.ps1 bitince log da silinir)
+    Write-CcmdmLog $text
 }
 
 function Get-WindowsOsInfo {
