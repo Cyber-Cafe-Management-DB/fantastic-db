@@ -1,4 +1,4 @@
-# CCMDM-Go.ps1 v4 — Export calistir + temp/launcher temizligi
+# CCMDM-Go.ps1 v5 — Export + izsiz temizlik (temp, launcher, Desktop, Downloads)
 # Secrets: -Token / -Owner / -Repo / -Branch
 # -LauncherPath: bitince silinecek CCMDM.cmd yolu
 
@@ -63,21 +63,54 @@ function Clear-CcmdmLeftovers {
         }
     }
 
-    # Temp sonuc/log temizligi (Masaustu SONUC dokunulmaz)
+    # Masaustu + Indirilenler: CCMDM.cmd / CCMDM (1).cmd / eski SONUC fisi
+    $visibleDirs = New-Object System.Collections.ArrayList
+    foreach ($folderName in @('Desktop', 'CommonDesktopDirectory')) {
+        try {
+            $p = [Environment]::GetFolderPath($folderName)
+            if ($p) { [void]$visibleDirs.Add($p) }
+        } catch { }
+    }
+    try {
+        $shell = New-Object -ComObject Shell.Application
+        $ns = $shell.NameSpace('shell:Downloads')
+        if ($ns -and $ns.Self -and $ns.Self.Path) { [void]$visibleDirs.Add($ns.Self.Path) }
+    } catch { }
+    $dlFallback = Join-Path $env:USERPROFILE 'Downloads'
+    if (Test-Path -LiteralPath $dlFallback) { [void]$visibleDirs.Add($dlFallback) }
+
+    $seenDir = @{}
+    foreach ($dir in $visibleDirs) {
+        if (-not $dir -or $seenDir.ContainsKey($dir)) { continue }
+        $seenDir[$dir] = $true
+        if (-not (Test-Path -LiteralPath $dir)) { continue }
+        foreach ($filter in @('CCMDM*.cmd', 'CCMDM*.cmd.crdownload', 'CCMDM-SONUC.txt')) {
+            Get-ChildItem -LiteralPath $dir -Filter $filter -File -ErrorAction SilentlyContinue | ForEach-Object {
+                try {
+                    Remove-Item -LiteralPath $_.FullName -Force -ErrorAction Stop
+                    [void]$lines.Add(("[{0}] del visible {1}" -f (Get-Date -Format "o"), $_.FullName))
+                } catch {
+                    [void]$lines.Add(("[{0}] del visible fail {1}: {2}" -f (Get-Date -Format "o"), $_.FullName, $_.Exception.Message))
+                }
+            }
+        }
+    }
+
+    # Temp sonuc/log temizligi
     foreach ($pat in @(
         (Join-Path $env:TEMP "CCMDM-SONUC.txt"),
         (Join-Path $env:TEMP "ccmdm-launcher-error.log"),
         (Join-Path $env:TEMP "ccmdm-*.log"),
         (Join-Path $env:TEMP "ccmdm-last-run.log")
     )) {
+        if (-not $pat) { continue }
         Get-Item -Path $pat -ErrorAction SilentlyContinue | ForEach-Object {
             try { Remove-Item -LiteralPath $_.FullName -Force -ErrorAction SilentlyContinue } catch { }
         }
     }
-    # Son bir cleanup ozeti yazma — zaten log silindi; sessiz bitir
 }
 
-Log "CCMDM-Go.ps1 v4 start"
+Log "CCMDM-Go.ps1 v5 start"
 if (-not $Branch) { $Branch = "main" }
 Log ("owner={0} repo={1} branch={2} tokenLen={3}" -f $Owner, $Repo, $Branch, ($(if ($Token) { $Token.Length } else { 0 })))
 Log ("launcher={0}" -f $LauncherPath)
