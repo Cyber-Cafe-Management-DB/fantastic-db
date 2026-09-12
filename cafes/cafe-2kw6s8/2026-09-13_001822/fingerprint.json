@@ -1,0 +1,275 @@
+{
+    "desktopHints":  [
+                         {
+                             "categories":  [
+                                                "gameMenu"
+                                            ],
+                             "name":  "NextPlay Client.lnk",
+                             "target":  "C:\\Users\\mrtymy\\AppData\\Local\\NextPlay.Client\\current\\NextPlay.exe"
+                         },
+                         {
+                             "categories":  [
+                                                "cafeAutomation"
+                                            ],
+                             "name":  "pncserver - Kısayol.lnk",
+                             "target":  "C:\\PanCafe Pro Server\\pncserver.exe"
+                         },
+                         {
+                             "categories":  [
+                                                "gameMenu"
+                                            ],
+                             "name":  "NextPlay Client.lnk",
+                             "target":  "C:\\Users\\mrtymy\\AppData\\Local\\NextPlay.Client\\current\\NextPlay.exe"
+                         },
+                         {
+                             "categories":  [
+                                                "cafeAutomation"
+                                            ],
+                             "name":  "PanCafe Pro İç İP Log \u0026 URL Monitör.lnk",
+                             "target":  "C:\\Program Files (x86)\\Pan Group\\PUL Server\\pulServer.exe"
+                         }
+                     ],
+    "installPathsFound":  [
+                              {
+                                  "path":  "C:\\ProgramData\\NextPlay",
+                                  "categories":  [
+                                                     "gameMenu"
+                                                 ]
+                              }
+                          ],
+    "os":  {
+               "ubr":  9445,
+               "currentBuild":  "26200",
+               "ntVersionString":  "Microsoft Windows NT 10.0.26200.0",
+               "revision":  0,
+               "editionId":  "Professional",
+               "productName":  "Windows 10 Pro",
+               "major":  10,
+               "build":  26200,
+               "architecture":  "64 bit",
+               "displayVersion":  "25H2",
+               "currentMajorVersionNumber":  10,
+               "caption":  "Microsoft Windows 11 Pro",
+               "minor":  0,
+               "friendly":  "Windows 11, version 25H2 (build 26200.9445) [64 bit]"
+           },
+    "guessed":  {
+                    "cafeAutomation":  "pncserver",
+                    "diskless":  null,
+                    "gameMenu":  "NextPlay Client.lnk"
+                },
+    "servicesMatched":  [
+
+                        ],
+    "desktop":  {
+                    "paths":  [
+                                  "C:\\Users\\mrtymy\\Desktop",
+                                  "C:\\Users\\Public\\Desktop"
+                              ],
+                    "items":  [
+                                  {
+                                      "target":  null,
+                                      "name":  "Faturalar",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "MÜŞTERİ EVRAKLARI",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Yeni klasör",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Adsız.png",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Adsız2.png",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Bomboş cv.docx",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Users\\mrtymy\\AppData\\Local\\CapCut\\Apps\\CapCut.exe",
+                                      "name":  "CapCut.lnk",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "cclisans.txt",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "CCMDM-SONUC.txt",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "CraftRise.exe",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Users\\mrtymy\\AppData\\Local\\Programs\\cursor\\Cursor.exe",
+                                      "name":  "Cursor.lnk",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "desktop.ini",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Program Files (x86)\\Hard Disk Sentinel\\HDSentinel.exe",
+                                      "name":  "Hard Disk Sentinel.lnk",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "HESAPLAR.txt",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Program Files\\Google\\Chrome\\Application\\chrome_proxy.exe",
+                                      "name":  "Hostinger Mail.lnk",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "G:\\Drive\u0027ım\\MAIN_FOLDER",
+                                      "name":  "MAIN FOLDER.lnk",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Program Files\\Google\\Chrome\\Application\\chrome_proxy.exe",
+                                      "name":  "Muhasebe.lnk",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "NextAccounts.Agent-win-Setup.exe",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Users\\mrtymy\\AppData\\Local\\NextPlay.Client\\current\\NextPlay.exe",
+                                      "name":  "NextPlay Client.lnk",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\PanCafe Pro Server\\pncserver.exe",
+                                      "name":  "pncserver - Kısayol.lnk",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Revo Uninstaller Pro 5.4.7.zip",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Program Files\\Google\\Chrome\\Application\\chrome_proxy.exe",
+                                      "name":  "Satış.lnk",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Users\\mrtymy\\AppData\\Roaming\\Spotify\\Spotify.exe",
+                                      "name":  "Spotify.lnk",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "wall.png",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Windows-Update-Blocker-main.rar",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Windows-Update-Blocker-main.zip",
+                                      "desktopRoot":  "C:\\Users\\mrtymy\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "desktop.ini",
+                                      "desktopRoot":  "C:\\Users\\Public\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+                                      "name":  "Google Chrome.lnk",
+                                      "desktopRoot":  "C:\\Users\\Public\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Users\\mrtymy\\AppData\\Local\\NextPlay.Client\\current\\NextPlay.exe",
+                                      "name":  "NextPlay Client.lnk",
+                                      "desktopRoot":  "C:\\Users\\Public\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Program Files (x86)\\Pan Group\\PUL Server\\pulServer.exe",
+                                      "name":  "PanCafe Pro İç İP Log \u0026 URL Monitör.lnk",
+                                      "desktopRoot":  "C:\\Users\\Public\\Desktop",
+                                      "isDir":  false
+                                  }
+                              ]
+                },
+    "processesMatched":  [
+                             {
+                                 "categories":  [
+                                                    "cafeAutomation"
+                                                ],
+                                 "path":  "C:\\PanCafe Pro Server\\pncserver.exe",
+                                 "name":  "pncserver"
+                             },
+                             {
+                                 "categories":  [
+                                                    "cafeAutomation"
+                                                ],
+                                 "path":  "C:\\PanCafe Pro Server\\pncserver.exe",
+                                 "name":  "pncserver"
+                             },
+                             {
+                                 "categories":  [
+                                                    "cafeAutomation"
+                                                ],
+                                 "path":  "C:\\PanCafe Pro Server\\pncserver.exe",
+                                 "name":  "pncserver"
+                             }
+                         ]
+}
