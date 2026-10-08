@@ -1,0 +1,36 @@
+{
+    "manifests":  [
+                      {
+                          "manifestHash":  "daa886c791da8ee2d39687549fcedf49c753dfefdc131477347086cc7be1a600",
+                          "entries":  [
+                                          "Cache/"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "Z:\\NextDiskless",
+                          "schemaVersion":  1,
+                          "exePath":  null,
+                          "exeMetadata":  [
+
+                                          ]
+                      }
+                  ],
+    "scannedAt":  "2026-10-09T02:10:11.3248842+03:00",
+    "rootPath":  "Z:\\",
+    "generatorVer":  "2.6.1",
+    "manifestCount":  1,
+    "rootId":  "DRIVE_Z",
+    "generator":  "CCMDM-Export.ps1",
+    "topLevel":  [
+                     {
+                         "exeHere":  false,
+                         "name":  "NextDiskless",
+                         "isDir":  true
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "S.CCacheX",
+                         "isDir":  false
+                     }
+                 ],
+    "schemaVersion":  1
+}

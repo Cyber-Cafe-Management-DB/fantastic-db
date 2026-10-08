@@ -1,0 +1,83 @@
+{
+    "manifests":  [
+                      {
+                          "manifestHash":  "251f64d8702a7227b704407b6278cb39f239d96d5621adb294e5f6c1ed88f871",
+                          "entries":  [
+                                          "Kına HDR.mp4"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "V:\\Irem Kina",
+                          "schemaVersion":  1,
+                          "exePath":  null,
+                          "exeMetadata":  [
+
+                                          ]
+                      },
+                      {
+                          "manifestHash":  "d99cab445c1fcb7e9d4247c3576b3ec652ad5d23fe0fdc8ea078ca08ed1d54de",
+                          "entries":  [
+                                          "Writeback/"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "V:\\NextDiskless",
+                          "schemaVersion":  1,
+                          "exePath":  null,
+                          "exeMetadata":  [
+
+                                          ]
+                      },
+                      {
+                          "manifestHash":  "735bf70d5e4b30adb1eee0f192ba13a904ae41a46f7f1f1f5cbb66ef138a7d2a",
+                          "entries":  [
+                                          "chunks/",
+                                          "releases/"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "V:\\Store",
+                          "schemaVersion":  1,
+                          "exePath":  null,
+                          "exeMetadata":  [
+
+                                          ]
+                      }
+                  ],
+    "scannedAt":  "2026-10-09T02:10:11.1591539+03:00",
+    "rootPath":  "V:\\",
+    "generatorVer":  "2.6.1",
+    "manifestCount":  3,
+    "rootId":  "DRIVE_V",
+    "generator":  "CCMDM-Export.ps1",
+    "topLevel":  [
+                     {
+                         "exeHere":  false,
+                         "name":  "Irem Kina",
+                         "isDir":  true
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "NextDiskless",
+                         "isDir":  true
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "Store",
+                         "isDir":  true
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC17-D.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC17-I.Win 25H2.CCBoot.vhd.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC17-S.vhdx",
+                         "isDir":  false
+                     }
+                 ],
+    "schemaVersion":  1
+}

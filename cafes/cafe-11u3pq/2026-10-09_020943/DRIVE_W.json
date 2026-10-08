@@ -1,0 +1,262 @@
+{
+    "manifests":  [
+                      {
+                          "manifestHash":  "9bfe207d3a2fc4f947f5d78832698fbc1742ff40d57442c6a408a0bb918732ec",
+                          "entries":  [
+                                          "CLIENT WIN 11 ICIN/",
+                                          "CCBoot 2025 Build 1213.exe",
+                                          "RCTECH-KEYSSHA1.cer",
+                                          "RCTECH-KEYSSHA256.cer"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "W:\\DISKSIZ\\CCBOOT Klasik\\Setup\\CCBOOT CLOUD OFFLINE 2025\\CCBOOT CLOUD OFFLINE 2025\\CCBOOT CLOUD OFFLINE 2025",
+                          "schemaVersion":  1,
+                          "exePath":  "W:\\DISKSIZ\\CCBOOT Klasik\\Setup\\CCBOOT CLOUD OFFLINE 2025\\CCBOOT CLOUD OFFLINE 2025\\CCBOOT CLOUD OFFLINE 2025\\CCBoot 2025 Build 1213.exe",
+                          "exeMetadata":  [
+                                              {
+                                                  "size":  34635423,
+                                                  "companyName":  "Youngzsoft",
+                                                  "relativePath":  "CCBoot 2025 Build 1213.exe",
+                                                  "fileVersion":  "1.2.1.3",
+                                                  "productName":  "CCBoot 2025 Build 1213",
+                                                  "name":  "CCBoot 2025 Build 1213.exe",
+                                                  "productVersion":  "1.2.1.3",
+                                                  "originalFilename":  "CCBoot 2025 Build 1213.exe"
+                                              }
+                                          ]
+                      },
+                      {
+                          "manifestHash":  "bc2d057de79ade4bbc2039d213a8249d36bc83215f0879bb46ee6dc98ebca489",
+                          "entries":  [
+                                          "CLIENT WIN 11 ICIN/",
+                                          "CRACK/",
+                                          "ccbootsetup.exe"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "W:\\DISKSIZ\\CCBOOT Klasik\\Setup\\CCBOOT KLASIK WIN11 DESTEGI",
+                          "schemaVersion":  1,
+                          "exePath":  "W:\\DISKSIZ\\CCBOOT Klasik\\Setup\\CCBOOT KLASIK WIN11 DESTEGI\\ccbootsetup.exe",
+                          "exeMetadata":  [
+                                              {
+                                                  "size":  28294920,
+                                                  "companyName":  "www.ccboot.com                                              ",
+                                                  "relativePath":  "ccbootsetup.exe",
+                                                  "fileVersion":  "                    ",
+                                                  "productName":  "CCBoot                                                      ",
+                                                  "name":  "ccbootsetup.exe",
+                                                  "productVersion":  "                                                  ",
+                                                  "originalFilename":  ""
+                                              }
+                                          ]
+                      },
+                      {
+                          "manifestHash":  "2bdf6c7a1c63f869c559518cbf8f5e5247c39a9b0c8cb3787f15cc9ee91f10f3",
+                          "entries":  [
+                                          "CCBootPNP 20240318.exe",
+                                          "fix_pnp.bat",
+                                          "vssfix.bat"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "W:\\DISKSIZ\\CCBOOT Klasik\\Setup\\CCBOOT Sanal Secure Boot\\CCBoot Client Fix Uefi 2019\\CCBoot Client Fix Uefi 2019 แท้",
+                          "schemaVersion":  1,
+                          "exePath":  "W:\\DISKSIZ\\CCBOOT Klasik\\Setup\\CCBOOT Sanal Secure Boot\\CCBoot Client Fix Uefi 2019\\CCBoot Client Fix Uefi 2019 แท้\\CCBootPNP 20240318.exe",
+                          "exeMetadata":  [
+                                              {
+                                                  "size":  1359352,
+                                                  "companyName":  "Youngzsoft",
+                                                  "relativePath":  "CCBootPNP 20240318.exe",
+                                                  "fileVersion":  "3.0",
+                                                  "productName":  "CCBootPNP",
+                                                  "name":  "CCBootPNP 20240318.exe",
+                                                  "productVersion":  "3.0",
+                                                  "originalFilename":  "CCBootPNP.exe"
+                                              }
+                                          ]
+                      },
+                      {
+                          "manifestHash":  "2e2cf92669bedb0fd5d60a84ccad9b467514971de52472e4ab76f64a0d6ae46b",
+                          "entries":  [
+                                          "Drivers/",
+                                          "Index/",
+                                          "logs/",
+                                          "Tools/",
+                                          "Nextplay.cloud.url",
+                                          "sdi.cfg",
+                                          "SDI_auto.bat",
+                                          "SDI_R2608.exe",
+                                          "SDI_x64_R2608.exe"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "W:\\DISKSIZ\\SDI",
+                          "schemaVersion":  1,
+                          "exePath":  "W:\\DISKSIZ\\SDI\\SDI_x64_R2608.exe",
+                          "exeMetadata":  [
+                                              {
+                                                  "size":  5181440,
+                                                  "companyName":  "www.SamLab.ws",
+                                                  "relativePath":  "SDI_R2608.exe",
+                                                  "fileVersion":  "2.26 2.26.8",
+                                                  "productName":  "SamLab Driver Installer",
+                                                  "name":  "SDI_R2608.exe",
+                                                  "productVersion":  "2.26.8",
+                                                  "originalFilename":  "SDI_2.26.8.exe"
+                                              },
+                                              {
+                                                  "size":  5599744,
+                                                  "companyName":  "www.SamLab.ws",
+                                                  "relativePath":  "SDI_x64_R2608.exe",
+                                                  "fileVersion":  "2.26 2.26.8",
+                                                  "productName":  "SamLab Driver Installer",
+                                                  "name":  "SDI_x64_R2608.exe",
+                                                  "productVersion":  "2.26.8",
+                                                  "originalFilename":  "SDI_2.26.8.exe"
+                                              }
+                                          ]
+                      },
+                      {
+                          "manifestHash":  "344851c07cde2c6e9e68255aead72aaff3987e0da27ec723df50c8c22de6d75c",
+                          "entries":  [
+                                          "AppdataLocal/",
+                                          "Battlestate Games/",
+                                          "PogramData/",
+                                          "Romaing/",
+                                          ".chunk_state.json",
+                                          "Baslat.exe"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "W:\\TKRGAME\\Battlestate Games Launcher",
+                          "schemaVersion":  1,
+                          "exePath":  "W:\\TKRGAME\\Battlestate Games Launcher\\Baslat.exe",
+                          "exeMetadata":  [
+                                              {
+                                                  "size":  251121,
+                                                  "companyName":  "Tikir Oyun Arşivi",
+                                                  "relativePath":  "Baslat.exe",
+                                                  "fileVersion":  "1.0.0.0",
+                                                  "productName":  "Battlestate Games Launcher",
+                                                  "name":  "Baslat.exe",
+                                                  "productVersion":  "1.0.0.0",
+                                                  "originalFilename":  ""
+                                              }
+                                          ]
+                      },
+                      {
+                          "manifestHash":  "1aae3bb2023fd69ced78effec382ec3bc9e2863e5cef4c068f24c33f3790b356",
+                          "entries":  [
+                                          "baseq2/",
+                                          "music/",
+                                          "setup/",
+                                          ".chunk_state.json",
+                                          "changelog.md",
+                                          "license.txt",
+                                          "notice.txt",
+                                          "q2rtx.exe",
+                                          "q2rtx.pdb",
+                                          "q2rtxded-x86.exe",
+                                          "q2rtxded-x86.pdb",
+                                          "q2rtxded.exe",
+                                          "q2rtxded.pdb",
+                                          "quake2-2.ico",
+                                          "readme.md",
+                                          "unins000.dat",
+                                          "unins000.exe",
+                                          "_ElAmigos Releases and Updates.url"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "W:\\TKRGAME\\Quake II RTX",
+                          "schemaVersion":  1,
+                          "exePath":  "W:\\TKRGAME\\Quake II RTX\\q2rtx.exe",
+                          "exeMetadata":  [
+                                              {
+                                                  "size":  10974720,
+                                                  "companyName":  "NVIDIA Corporation",
+                                                  "relativePath":  "q2rtx.exe",
+                                                  "fileVersion":  "1.8.0",
+                                                  "productName":  "Quake II RTX",
+                                                  "name":  "q2rtx.exe",
+                                                  "productVersion":  "1.8.0",
+                                                  "originalFilename":  "q2rtx.exe"
+                                              },
+                                              {
+                                                  "size":  1191936,
+                                                  "companyName":  "NVIDIA Corporation",
+                                                  "relativePath":  "q2rtxded-x86.exe",
+                                                  "fileVersion":  "1.8.0",
+                                                  "productName":  "Quake II RTX",
+                                                  "name":  "q2rtxded-x86.exe",
+                                                  "productVersion":  "1.8.0",
+                                                  "originalFilename":  "q2rtxded.exe"
+                                              },
+                                              {
+                                                  "size":  1555456,
+                                                  "companyName":  "NVIDIA Corporation",
+                                                  "relativePath":  "q2rtxded.exe",
+                                                  "fileVersion":  "1.8.0",
+                                                  "productName":  "Quake II RTX",
+                                                  "name":  "q2rtxded.exe",
+                                                  "productVersion":  "1.8.0",
+                                                  "originalFilename":  "q2rtxded.exe"
+                                              },
+                                              {
+                                                  "size":  1369893,
+                                                  "companyName":  "",
+                                                  "relativePath":  "unins000.exe",
+                                                  "fileVersion":  "51.1052.0.0",
+                                                  "productName":  "",
+                                                  "name":  "unins000.exe",
+                                                  "productVersion":  "",
+                                                  "originalFilename":  ""
+                                              }
+                                          ]
+                      }
+                  ],
+    "scannedAt":  "2026-10-09T02:10:11.2874508+03:00",
+    "rootPath":  "W:\\",
+    "generatorVer":  "2.6.1",
+    "manifestCount":  6,
+    "rootId":  "DRIVE_W",
+    "generator":  "CCMDM-Export.ps1",
+    "topLevel":  [
+                     {
+                         "exeHere":  false,
+                         "name":  "DISKSIZ",
+                         "isDir":  true
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "TKRGAME",
+                         "isDir":  true
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC18-D.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC18-I.Win 25H2.CCBoot.vhd.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC18-S.vhdx",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC19-D.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC19-I.Win 25H2.CCBoot.vhd.vhd",
+                         "isDir":  false
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "PC19-S.vhdx",
+                         "isDir":  false
+                     }
+                 ],
+    "schemaVersion":  1
+}

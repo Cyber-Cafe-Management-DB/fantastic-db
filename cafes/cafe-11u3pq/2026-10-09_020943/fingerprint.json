@@ -1,0 +1,427 @@
+{
+    "desktopHints":  [
+                         {
+                             "categories":  [
+                                                "gameMenu"
+                                            ],
+                             "name":  "NextPlay GTAV Enchanced Server",
+                             "target":  null
+                         },
+                         {
+                             "categories":  [
+                                                "diskless"
+                                            ],
+                             "name":  "CCBOOT CLOUD OFFLINE 2025.rar",
+                             "target":  null
+                         },
+                         {
+                             "categories":  [
+                                                "diskless"
+                                            ],
+                             "name":  "ccboot-diskless-architecture-spec.md",
+                             "target":  null
+                         },
+                         {
+                             "categories":  [
+                                                "gameMenu"
+                                            ],
+                             "name":  "nextplay.png",
+                             "target":  null
+                         },
+                         {
+                             "categories":  [
+                                                "diskless"
+                                            ],
+                             "name":  "CCBoot.lnk",
+                             "target":  "C:\\CCBoot\\CCBoot.exe"
+                         },
+                         {
+                             "categories":  [
+                                                "gameMenu"
+                                            ],
+                             "name":  "NextPlay OyunArşivi.lnk",
+                             "target":  "D:\\NextPlay-UI\\NextPlay.exe"
+                         }
+                     ],
+    "installPathsFound":  [
+                              {
+                                  "path":  "C:\\CCBoot",
+                                  "categories":  [
+                                                     "diskless"
+                                                 ]
+                              },
+                              {
+                                  "path":  "C:\\ProgramData\\NextPlay",
+                                  "categories":  [
+                                                     "gameMenu"
+                                                 ]
+                              }
+                          ],
+    "os":  {
+               "ubr":  33158,
+               "currentBuild":  "26100",
+               "ntVersionString":  "Microsoft Windows NT 10.0.26100.0",
+               "revision":  0,
+               "editionId":  "ServerStandard",
+               "productName":  "Windows Server 2025 Standard",
+               "major":  10,
+               "build":  26100,
+               "architecture":  "64 bit",
+               "displayVersion":  "24H2",
+               "currentMajorVersionNumber":  10,
+               "caption":  "Microsoft Windows Server 2025 Standard",
+               "minor":  0,
+               "friendly":  "Windows 11, version 24H2 (build 26100.33158) [64 bit]"
+           },
+    "guessed":  {
+                    "cafeAutomation":  null,
+                    "diskless":  "CCBoot",
+                    "gameMenu":  "NextPlay"
+                },
+    "servicesMatched":  [
+                            {
+                                "categories":  [
+                                                   "diskless"
+                                               ],
+                                "status":  "Running",
+                                "name":  "CCBoot",
+                                "displayName":  "CCBoot"
+                            },
+                            {
+                                "categories":  [
+                                                   "gameMenu"
+                                               ],
+                                "status":  "Running",
+                                "name":  "NextPlay GTAV Enchanced Server",
+                                "displayName":  "NextPlay GTAV Enchanced Server"
+                            },
+                            {
+                                "categories":  [
+                                                   "gameMenu"
+                                               ],
+                                "status":  "Stopped",
+                                "name":  "NextPlay Towny",
+                                "displayName":  "NextPlay Towny"
+                            }
+                        ],
+    "desktop":  {
+                    "paths":  [
+                                  "C:\\Users\\Administrator\\Desktop",
+                                  "C:\\Users\\Public\\Desktop"
+                              ],
+                    "items":  [
+                                  {
+                                      "target":  null,
+                                      "name":  "Codex",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Crystal",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Defender-Control-main",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "GTA5 Map Offroad",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "HardDiskSentinel",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "NextPlay GTAV Enchanced Server",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Notepad4",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Oyunindir.vip Quake III Arena",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Q3A-v1.32e-REMASTERED",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "q3rtx_mod_06082026_v075_Quakecon_2026",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Steam Up",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "ventoy-1.1.17",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Windows-Update-Blocker-main",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  true
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "5ac1403a-2bf7-44f2-972d-ed4a4042931f_f.html",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "CCBOOT CLOUD OFFLINE 2025.rar",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "ccboot-diskless-architecture-spec.md",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "cclisans.txt",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "CCMDM.cmd",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "ChatGPT Installer.exe",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Users\\Administrator\\AppData\\Local\\Programs\\cursor\\Cursor.exe",
+                                      "name":  "Cursor.lnk",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "eVergi_levhasi_06-10-2026 14_21.pdf",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "GA503RM IT8252E248A keyboard dump.bin",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Geliver Kargo takip numarası al.pdf",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Users\\Administrator\\AppData\\Local\\Programs\\Grok Bot\\Grok Bot.exe",
+                                      "name":  "Grok Bot.lnk",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Left 4 Dead 2.url",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "nextplay.png",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Users\\Administrator\\AppData\\Local\\Programs\\NextVideo\\NextVideo.exe",
+                                      "name":  "NextVideo.lnk",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Permafrost 2h Preview.url",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "pricedown bl.ttf",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "profil.jpg",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Q3A-v1.32e-REMASTERED.rar",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "q3rtx_mod_06082026_v075_Quakecon_2026.zip",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Rust Çökme SOrunuyla İlgili.png",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "SCP Secret Laboratory.url",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "Search.exe",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  null,
+                                      "name":  "The Outlast Trials.url",
+                                      "desktopRoot":  "C:\\Users\\Administrator\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\CCBoot\\CCBoot.exe",
+                                      "name":  "CCBoot.lnk",
+                                      "desktopRoot":  "C:\\Users\\Public\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+                                      "name":  "Google Chrome.lnk",
+                                      "desktopRoot":  "C:\\Users\\Public\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "D:\\NextPlay-UI\\NextPlay.exe",
+                                      "name":  "NextPlay OyunArşivi.lnk",
+                                      "desktopRoot":  "C:\\Users\\Public\\Desktop",
+                                      "isDir":  false
+                                  },
+                                  {
+                                      "target":  "C:\\Program Files (x86)\\WinSCP\\WinSCP.exe",
+                                      "name":  "WinSCP.lnk",
+                                      "desktopRoot":  "C:\\Users\\Public\\Desktop",
+                                      "isDir":  false
+                                  }
+                              ]
+                },
+    "processesMatched":  [
+                             {
+                                 "categories":  [
+                                                    "diskless"
+                                                ],
+                                 "path":  "C:\\CCBoot\\CCBoot.exe",
+                                 "name":  "CCBoot"
+                             },
+                             {
+                                 "categories":  [
+                                                    "diskless"
+                                                ],
+                                 "path":  "C:\\CCBoot\\CCBoot.exe",
+                                 "name":  "CCBoot"
+                             },
+                             {
+                                 "categories":  [
+                                                    "gameMenu"
+                                                ],
+                                 "path":  "C:\\ProgramData\\NextPlay\\coretemp\\CoreTemp.exe",
+                                 "name":  "CoreTemp"
+                             },
+                             {
+                                 "categories":  [
+                                                    "gameMenu"
+                                                ],
+                                 "path":  "D:\\NextPlay-UI\\current\\NextPlay.exe",
+                                 "name":  "NextPlay"
+                             },
+                             {
+                                 "categories":  [
+                                                    "gameMenu"
+                                                ],
+                                 "path":  "D:\\NextPlay-UI\\current\\NextPlay.exe",
+                                 "name":  "NextPlay"
+                             },
+                             {
+                                 "categories":  [
+                                                    "gameMenu"
+                                                ],
+                                 "path":  "C:\\Users\\Administrator\\AppData\\Local\\NextPlay.Server.Admin\\current\\NextPlayAgent.exe",
+                                 "name":  "NextPlayAgent"
+                             },
+                             {
+                                 "categories":  [
+                                                    "gameMenu"
+                                                ],
+                                 "path":  "C:\\NextPlay\\GTAV Enchanced Server\\NextPlayHizmet.exe",
+                                 "name":  "NextPlayHizmet"
+                             },
+                             {
+                                 "categories":  [
+                                                    "gameMenu"
+                                                ],
+                                 "path":  "C:\\Users\\Administrator\\AppData\\Local\\NextPlay.Server.Admin\\current\\resources\\backend-bundle\\node.exe",
+                                 "name":  "node"
+                             },
+                             {
+                                 "categories":  [
+                                                    "gameMenu"
+                                                ],
+                                 "path":  "C:\\NextPlay\\GTAV Enchanced Server\\enhanced coop\\RageCoop.Server.exe",
+                                 "name":  "RageCoop.Server"
+                             },
+                             {
+                                 "categories":  [
+                                                    "gameMenu"
+                                                ],
+                                 "path":  "C:\\NextPlay\\GTAV Enchanced Server\\enhanced race\\RageCoop.Server.exe",
+                                 "name":  "RageCoop.Server"
+                             }
+                         ]
+}

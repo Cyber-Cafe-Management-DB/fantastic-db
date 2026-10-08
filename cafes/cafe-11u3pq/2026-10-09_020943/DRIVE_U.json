@@ -1,0 +1,223 @@
+{
+    "manifests":  [
+                      {
+                          "manifestHash":  "610ffd435ff2e06035773fba96bac42daf69b44801a3d80b307ff9207846c06a",
+                          "entries":  [
+                                          "filterscripts/",
+                                          "gamemodes/",
+                                          "Accounts.xml",
+                                          "AdminTools.dll",
+                                          "Banlist.xml",
+                                          "Baslat.ps1",
+                                          "GTAServer.exe",
+                                          "hizmet.log",
+                                          "Lidgren.Network.dll",
+                                          "protobuf-net.dll",
+                                          "Settings.xml",
+                                          "UcgenHizmet.cs",
+                                          "UcgenHizmet.exe"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "U:\\Ucgen-COOP",
+                          "schemaVersion":  1,
+                          "exePath":  "U:\\Ucgen-COOP\\GTAServer.exe",
+                          "exeMetadata":  [
+                                              {
+                                                  "size":  45568,
+                                                  "companyName":  "",
+                                                  "relativePath":  "GTAServer.exe",
+                                                  "fileVersion":  "1.0.0.0",
+                                                  "productName":  "GTAServer",
+                                                  "name":  "GTAServer.exe",
+                                                  "productVersion":  "1.0.0.0",
+                                                  "originalFilename":  "GTAServer.exe"
+                                              },
+                                              {
+                                                  "size":  7168,
+                                                  "companyName":  "",
+                                                  "relativePath":  "UcgenHizmet.exe",
+                                                  "fileVersion":  "0.0.0.0",
+                                                  "productName":  "",
+                                                  "name":  "UcgenHizmet.exe",
+                                                  "productVersion":  "0.0.0.0",
+                                                  "originalFilename":  "UcgenHizmet.exe"
+                                              }
+                                          ]
+                      },
+                      {
+                          "manifestHash":  "94baa1186f25d9c39dfff2ed05d5007af6dcd6c58fb13ca801debc51bc1a9ad8",
+                          "entries":  [
+                                          "phpmyadmin3.4.10.1/",
+                                          "sqlbuddy1.3.3/",
+                                          "KOPYALA.BAT",
+                                          "vcredist_x64-2008.exe",
+                                          "vcredist_x86-2008.exe"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "U:\\ucgen-srv\\apps",
+                          "schemaVersion":  1,
+                          "exePath":  "U:\\ucgen-srv\\apps\\vcredist_x64-2008.exe",
+                          "exeMetadata":  [
+                                              {
+                                                  "size":  5207896,
+                                                  "companyName":  "Microsoft Corporation",
+                                                  "relativePath":  "vcredist_x64-2008.exe",
+                                                  "fileVersion":  "9.0.30729.5677",
+                                                  "productName":  "Microsoft Visual C++ 2008 Redistributable",
+                                                  "name":  "vcredist_x64-2008.exe",
+                                                  "productVersion":  "9.0.30729.5677",
+                                                  "originalFilename":  "vcredist_x64.exe"
+                                              },
+                                              {
+                                                  "size":  4479832,
+                                                  "companyName":  "Microsoft Corporation",
+                                                  "relativePath":  "vcredist_x86-2008.exe",
+                                                  "fileVersion":  "9.0.30729.5677",
+                                                  "productName":  "Microsoft Visual C++ 2008 Redistributable",
+                                                  "name":  "vcredist_x86-2008.exe",
+                                                  "productVersion":  "9.0.30729.5677",
+                                                  "originalFilename":  "vcredist_x86.exe"
+                                              }
+                                          ]
+                      },
+                      {
+                          "manifestHash":  "880bbd6c29a33aa78eda84b42d9cbcdca442fc5e20808adaf34c29504d0acc20",
+                          "entries":  [
+                                          "callofdutywarzone/",
+                                          "CallofDutyWarzoneShader/",
+                                          "GTAV/",
+                                          "musteri/",
+                                          "Performance/",
+                                          "PerformanceTest/",
+                                          "players2/",
+                                          "Steam Gaming Menu/",
+                                          "TeamSpeak 3 Client/",
+                                          "cookpass.rar",
+                                          "hdsentinel_pro_setup.exe",
+                                          "Performance.rar",
+                                          "TeamSpeak3-Client-win64-3.1.8.exe",
+                                          "Yeni Metin Belgesi.txt"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "U:\\ucgen-srv\\save$",
+                          "schemaVersion":  1,
+                          "exePath":  "U:\\ucgen-srv\\save$\\TeamSpeak3-Client-win64-3.1.8.exe",
+                          "exeMetadata":  [
+                                              {
+                                                  "size":  36231104,
+                                                  "companyName":  "Janos Mathe                                                 ",
+                                                  "relativePath":  "hdsentinel_pro_setup.exe",
+                                                  "fileVersion":  "6.0.1.0             ",
+                                                  "productName":  "Hard Disk Sentinel                                          ",
+                                                  "name":  "hdsentinel_pro_setup.exe",
+                                                  "productVersion":  "6.0.1.0             ",
+                                                  "originalFilename":  ""
+                                              },
+                                              {
+                                                  "size":  78082184,
+                                                  "companyName":  "TeamSpeak Systems GmbH",
+                                                  "relativePath":  "TeamSpeak3-Client-win64-3.1.8.exe",
+                                                  "fileVersion":  "3.1.8",
+                                                  "productName":  "TeamSpeak 3 Client",
+                                                  "name":  "TeamSpeak3-Client-win64-3.1.8.exe",
+                                                  "productVersion":  "3.1.8",
+                                                  "originalFilename":  ""
+                                              }
+                                          ]
+                      },
+                      {
+                          "manifestHash":  "8d31168646d197169def462aff7da318bb70589a5b7982d71d106bcd1232ed28",
+                          "entries":  [
+                                          "Client_Dosyalari/",
+                                          "Documents/",
+                                          "Gerekli Programlar/",
+                                          "NextAccounts.Agent-win-Setup.exe",
+                                          "UCGEN-OYUNARSIVI-KURULUM.BAT"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "U:\\ucgen-srv\\www\\Kurulum",
+                          "schemaVersion":  1,
+                          "exePath":  "U:\\ucgen-srv\\www\\Kurulum\\NextAccounts.Agent-win-Setup.exe",
+                          "exeMetadata":  [
+                                              {
+                                                  "size":  83955461,
+                                                  "companyName":  "NextAccounts",
+                                                  "relativePath":  "NextAccounts.Agent-win-Setup.exe",
+                                                  "fileVersion":  "1.1.106",
+                                                  "productName":  "Next Accounts",
+                                                  "name":  "NextAccounts.Agent-win-Setup.exe",
+                                                  "productVersion":  "1.1.106",
+                                                  "originalFilename":  ""
+                                              }
+                                          ]
+                      },
+                      {
+                          "manifestHash":  "86f7c14cf6d4302edef27916f56ae481ff92b5379c11f2a78c4a57c2afa9b748",
+                          "entries":  [
+                                          "Arkaplanlar/",
+                                          "ayarlar/",
+                                          "batch/",
+                                          "hileler/",
+                                          "regler/",
+                                          "resimler/",
+                                          "savegame/",
+                                          "sistem/",
+                                          "videolar/",
+                                          "fart.exe",
+                                          "TESTGOSTER.exe",
+                                          "TESTOK.jpg",
+                                          "Thumbs.db"
+                                      ],
+                          "steamAppId":  null,
+                          "folderPath":  "U:\\ucgen-srv\\www\\oyunlar",
+                          "schemaVersion":  1,
+                          "exePath":  "U:\\ucgen-srv\\www\\oyunlar\\TESTGOSTER.exe",
+                          "exeMetadata":  [
+                                              {
+                                                  "size":  69660,
+                                                  "companyName":  "",
+                                                  "relativePath":  "fart.exe",
+                                                  "fileVersion":  "",
+                                                  "productName":  "",
+                                                  "name":  "fart.exe",
+                                                  "productVersion":  "",
+                                                  "originalFilename":  ""
+                                              },
+                                              {
+                                                  "size":  290304,
+                                                  "companyName":  "Alberto Martínez Pérez",
+                                                  "relativePath":  "TESTGOSTER.exe",
+                                                  "fileVersion":  "1.0.0.0",
+                                                  "productName":  "",
+                                                  "name":  "TESTGOSTER.exe",
+                                                  "productVersion":  "1.0.0.0",
+                                                  "originalFilename":  ""
+                                              }
+                                          ]
+                      }
+                  ],
+    "scannedAt":  "2026-10-09T02:10:11.0917163+03:00",
+    "rootPath":  "U:\\",
+    "generatorVer":  "2.6.1",
+    "manifestCount":  5,
+    "rootId":  "DRIVE_U",
+    "generator":  "CCMDM-Export.ps1",
+    "topLevel":  [
+                     {
+                         "exeHere":  true,
+                         "name":  "Ucgen-COOP",
+                         "isDir":  true
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "ucgen-srv",
+                         "isDir":  true
+                     },
+                     {
+                         "exeHere":  false,
+                         "name":  "steam.txt",
+                         "isDir":  false
+                     }
+                 ],
+    "schemaVersion":  1
+}

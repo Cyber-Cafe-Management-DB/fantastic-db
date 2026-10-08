@@ -1,0 +1,247 @@
+{
+    "cafeName":  "cafe-11u3pq",
+    "stamp":  "2026-10-09_020943",
+    "warning":  null,
+    "scannedAt":  "2026-10-09T02:10:11.8051230+03:00",
+    "userName":  "mrtymynext",
+    "scriptVersion":  "2.6.1",
+    "logFile":  "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\2\\ccmdm-20261009_020943.log",
+    "tokenLen":  93,
+    "skipDrive":  "C:\\",
+    "cafeSlug":  "cafe-11u3pq",
+    "hostname":  "UCGEN",
+    "note":  "FolderManifest + cafe fingerprint for CCMDM. No game payloads.",
+    "schemaVersion":  1,
+    "guessed":  {
+                    "cafeAutomation":  null,
+                    "diskless":  "CCBoot",
+                    "gameMenu":  "NextPlay"
+                },
+    "roots":  [
+                  {
+                      "topLevelCount":  0,
+                      "rootId":  "DRIVE_A",
+                      "manifestCount":  0,
+                      "file":  "DRIVE_A.json",
+                      "rootPath":  "A:\\"
+                  },
+                  {
+                      "topLevelCount":  6,
+                      "rootId":  "DRIVE_D",
+                      "manifestCount":  42,
+                      "file":  "DRIVE_D.json",
+                      "rootPath":  "D:\\"
+                  },
+                  {
+                      "topLevelCount":  3,
+                      "rootId":  "DRIVE_S",
+                      "manifestCount":  294,
+                      "file":  "DRIVE_S.json",
+                      "rootPath":  "S:\\"
+                  },
+                  {
+                      "topLevelCount":  3,
+                      "rootId":  "DRIVE_U",
+                      "manifestCount":  5,
+                      "file":  "DRIVE_U.json",
+                      "rootPath":  "U:\\"
+                  },
+                  {
+                      "topLevelCount":  6,
+                      "rootId":  "DRIVE_V",
+                      "manifestCount":  3,
+                      "file":  "DRIVE_V.json",
+                      "rootPath":  "V:\\"
+                  },
+                  {
+                      "topLevelCount":  8,
+                      "rootId":  "DRIVE_W",
+                      "manifestCount":  6,
+                      "file":  "DRIVE_W.json",
+                      "rootPath":  "W:\\"
+                  },
+                  {
+                      "topLevelCount":  2,
+                      "rootId":  "DRIVE_Z",
+                      "manifestCount":  1,
+                      "file":  "DRIVE_Z.json",
+                      "rootPath":  "Z:\\"
+                  }
+              ],
+    "driveDiags":  {
+                       "DRIVE_Z":  [
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "NextDiskless",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "S.CCacheX",
+                                           "isDir":  false
+                                       }
+                                   ],
+                       "DRIVE_A":  [
+
+                                   ],
+                       "DRIVE_V":  [
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "Irem Kina",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "NextDiskless",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "Store",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC17-D.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC17-I.Win 25H2.CCBoot.vhd.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC17-S.vhdx",
+                                           "isDir":  false
+                                       }
+                                   ],
+                       "DRIVE_W":  [
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "DISKSIZ",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "TKRGAME",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC18-D.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC18-I.Win 25H2.CCBoot.vhd.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC18-S.vhdx",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC19-D.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC19-I.Win 25H2.CCBoot.vhd.vhd",
+                                           "isDir":  false
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "PC19-S.vhdx",
+                                           "isDir":  false
+                                       }
+                                   ],
+                       "DRIVE_D":  [
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "nextplay",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  true,
+                                           "name":  "NextPlay-UI",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "OFFLINE",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "ONLINE",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  true,
+                                           "name":  "Roblox",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "tmp-mc-test.tar",
+                                           "isDir":  false
+                                       }
+                                   ],
+                       "DRIVE_U":  [
+                                       {
+                                           "exeHere":  true,
+                                           "name":  "Ucgen-COOP",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "ucgen-srv",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "steam.txt",
+                                           "isDir":  false
+                                       }
+                                   ],
+                       "DRIVE_S":  [
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "OFFLINE",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "ONLINE",
+                                           "isDir":  true
+                                       },
+                                       {
+                                           "exeHere":  false,
+                                           "name":  "SteamLib",
+                                           "isDir":  true
+                                       }
+                                   ]
+                   },
+    "osInfo":  {
+                   "ubr":  33158,
+                   "currentBuild":  "26100",
+                   "ntVersionString":  "Microsoft Windows NT 10.0.26100.0",
+                   "revision":  0,
+                   "editionId":  "ServerStandard",
+                   "productName":  "Windows Server 2025 Standard",
+                   "major":  10,
+                   "build":  26100,
+                   "architecture":  "64 bit",
+                   "displayVersion":  "24H2",
+                   "currentMajorVersionNumber":  10,
+                   "caption":  "Microsoft Windows Server 2025 Standard",
+                   "minor":  0,
+                   "friendly":  "Windows 11, version 24H2 (build 26100.33158) [64 bit]"
+               },
+    "maxDepth":  6,
+    "os":  "Windows 11, version 24H2 (build 26100.33158) [64 bit]",
+    "psVersion":  "5.1.26100.33158"
+}

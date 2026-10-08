@@ -1,0 +1,15 @@
+{
+    "manifests":  [
+
+                  ],
+    "scannedAt":  "2026-10-09T02:09:43.2365376+03:00",
+    "rootPath":  "A:\\",
+    "generatorVer":  "2.6.1",
+    "manifestCount":  0,
+    "rootId":  "DRIVE_A",
+    "generator":  "CCMDM-Export.ps1",
+    "topLevel":  [
+
+                 ],
+    "schemaVersion":  1
+}
